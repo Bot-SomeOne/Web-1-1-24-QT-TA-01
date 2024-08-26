@@ -1,11 +1,10 @@
 
 using lab1.models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace lab1.Controllers;
 
-class StudentController : Controller {
+public class StudentController : Controller {
     // Variables
     private List<Student> listStudent = new List<Student>();
 
