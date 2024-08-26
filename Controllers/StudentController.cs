@@ -80,4 +80,10 @@ public class StudentController : Controller {
         this.listStudent.Add(student);
         return View("Index", this.listStudent);
     }
+
+    // GET: Details
+    public IActionResult Details(int id) {
+        Student student = this.listStudent.FirstOrDefault(s => s.Id == id);
+        return View(student);
+    }
 }
