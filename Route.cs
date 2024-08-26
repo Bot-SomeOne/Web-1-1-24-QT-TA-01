@@ -56,8 +56,17 @@ class Route
          */
         app.MapControllerRoute(
             name: "upload small file",
-            pattern: "upload/image/",
+            pattern: "upload/image/1",
             defaults: new { controller = "BufferedFileUpload", action = "Index" }
+        );
+
+        /**
+         * Add a route for StreamFileUploadLocalService
+         */
+        app.MapControllerRoute(
+            name: "upload small file",
+            pattern: "upload/image/2",
+            defaults: new { controller = "StreamFileUploadLocalService", action = "Index" }
         );
     }
 }
