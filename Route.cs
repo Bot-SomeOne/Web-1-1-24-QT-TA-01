@@ -50,5 +50,14 @@ class Route
             pattern: "admin/student/add/{id?}",
             defaults: new { controller = "Student", action = "Create" }
         );
+
+        /**
+         * Add a route for BufferedFileUploadController
+         */
+        app.MapControllerRoute(
+            name: "upload small file",
+            pattern: "upload/image/",
+            defaults: new { controller = "BufferedFileUpload", action = "Index" }
+        );
     }
 }
