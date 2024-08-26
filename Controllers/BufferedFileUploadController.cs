@@ -33,6 +33,7 @@ public class BufferedFileUploadController : Controller
         {
             //Log ex
             ViewBag.Message = "File Upload Failed";
+            Console.WriteLine(ex);
         }
         return View();
     }
