@@ -18,7 +18,8 @@ class Route
          */
         app.MapControllerRoute(
             name: "default",
-            pattern: "{controller=Home}/{action=Index}/{id?}"
+            pattern: "{controller=Home}/{action=Index}/{id?}",
+            defaults: new { controller = "Home", action = "Index" }
         );
 
         /**
@@ -28,7 +29,9 @@ class Route
          */
         app.MapControllerRoute(
             name: "student",
-            pattern: "{controller=Student}/{action=Index}/{id?}"
+            pattern: "{controller=Student}/{action=Index}/{id?}",
+            defaults: new { controller = "Student", action = "Index" }
         );
+
     }
 }
