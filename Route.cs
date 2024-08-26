@@ -33,5 +33,22 @@ class Route
             defaults: new { controller = "Student", action = "Index" }
         );
 
+        /**
+         * Add a route for student/index to admin/student/list
+         */
+        app.MapControllerRoute(
+            name: "studentIndex",
+            pattern: "admin/student/list/{id?}",
+            defaults: new { controller = "Student", action = "Index" }
+        );
+
+        /**
+         * Add a route for student/create to admin/student/add
+         */
+        app.MapControllerRoute(
+            name: "studentCreate",
+            pattern: "admin/student/add/{id?}",
+            defaults: new { controller = "Student", action = "Create" }
+        );
     }
 }
