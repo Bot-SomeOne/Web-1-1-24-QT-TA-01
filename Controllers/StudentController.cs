@@ -29,6 +29,24 @@ public class StudentController : Controller {
                 Address = "A1-2019",
                 Email = "tu@gmail.com"
             },
+            new Student() {
+                Id = 103,
+                Name = "Hoang Phong",
+                Branch = Branch.CE,
+                Gender = Gender.Male,
+                IsRegular = false,
+                Address = "A1-2020",
+                Email = "phong@gmail.com"
+            },
+            new Student() {
+                Id = 104,
+                Name = "Xuan Mai",
+                Branch = Branch.EE,
+                Gender = Gender.Female,
+                IsRegular = false,
+                Address = "A1-2021",
+                Email = "mai@gmail.com"
+            },
         };
     }
 
