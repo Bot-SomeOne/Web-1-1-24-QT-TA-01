@@ -12,4 +12,5 @@ public class Student {
     public bool IsRegular { get; set; } // Hệ: true - chính qui; false - phi chính qui
     public string? Address { get; set; }
     public DateTime? DateOfBirth { get; set; }
+    public byte[]? Avatar { get; set; }
 }
