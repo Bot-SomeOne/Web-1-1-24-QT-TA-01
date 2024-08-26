@@ -7,8 +7,8 @@ class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
-        builder.Services.AddControllersWithViews();
+        BuildServices(builder);
+        BuildDataBase(builder);
 
         var app = builder.Build();
 
@@ -20,18 +20,18 @@ class Program
             app.UseHsts();
         }
 
-        app.UseHttpsRedirection();
-        app.UseStaticFiles();
-
-        app.UseRouting();
-
-        app.UseAuthorization();
-
-        app.MapControllerRoute(
-            name: "default",
-            pattern: "{controller=Home}/{action=Index}/{id?}");
+        Route.RouteConfig(app);
 
         app.Run();
+    }
+
+    private static void BuildServices(WebApplicationBuilder builder) {
+        // Add services to the container.
+        builder.Services.AddControllersWithViews();
+    }
+
+    private static void BuildDataBase(WebApplicationBuilder builder) {
+        // TODO: Add services to the container
     }
 }
 
