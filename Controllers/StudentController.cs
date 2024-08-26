@@ -1,6 +1,7 @@
 
 using lab1.models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace lab1.Controllers;
 
@@ -55,5 +56,28 @@ public class StudentController : Controller {
     // GET: Student
     public IActionResult Index() {
         return View(this.listStudent);
+    }
+
+    // GET: Create
+    [HttpGet]
+    public IActionResult Create() {
+        // Lấy Enum Genders tạo thành list và gán vào ViewBag => Tạo radio button
+        ViewBag.AllGenders = Enum.GetValues(typeof(Gender)).Cast<Gender>().ToList();
+
+        ViewBag.AllBranches = new List<SelectListItem>() {
+            new SelectListItem { Text = "IT", Value = "1" },
+            new SelectListItem { Text = "BE", Value = "2" },
+            new SelectListItem { Text = "CE", Value = "3" },
+            new SelectListItem { Text = "EE", Value = "4" },
+        };
+        return View();
+    }
+
+    // POST: Create
+    [HttpPost]
+    public IActionResult Create(Student student) {
+        student.Id = this.listStudent.Count + 1;
+        this.listStudent.Add(student);
+        return View("Index", student);
     }
 }
