@@ -1,3 +1,5 @@
+using lab1.services;
+using lab1.interfaces;
 
 namespace lab1;
 
@@ -28,6 +30,7 @@ class Program
     private static void BuildServices(WebApplicationBuilder builder) {
         // Add services to the container.
         builder.Services.AddControllersWithViews();
+        builder.Services.AddTransient<IBufferedFileUploadService, BufferedFileUploadLocalService>();
     }
 
     private static void BuildDataBase(WebApplicationBuilder builder) {
