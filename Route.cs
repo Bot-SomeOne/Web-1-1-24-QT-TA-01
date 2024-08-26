@@ -64,9 +64,9 @@ class Route
          * Add a route for StreamFileUploadLocalService
          */
         app.MapControllerRoute(
-            name: "upload small file",
+            name: "upload small large",
             pattern: "upload/2",
-            defaults: new { controller = "StreamFileUploadLocalService", action = "Index" }
+            defaults: new { controller = "StreamFileUpload", action = "Index" }
         );
     }
 }
