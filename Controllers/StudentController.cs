@@ -78,6 +78,6 @@ public class StudentController : Controller {
     public IActionResult Create(Student student) {
         student.Id = this.listStudent.Count + 1;
         this.listStudent.Add(student);
-        return View("Index", student);
+        return View("Index", this.listStudent);
     }
 }
