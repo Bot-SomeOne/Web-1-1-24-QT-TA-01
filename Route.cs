@@ -56,7 +56,7 @@ class Route
          */
         app.MapControllerRoute(
             name: "upload small file",
-            pattern: "upload/image/1",
+            pattern: "upload/1",
             defaults: new { controller = "BufferedFileUpload", action = "Index" }
         );
 
@@ -65,7 +65,7 @@ class Route
          */
         app.MapControllerRoute(
             name: "upload small file",
-            pattern: "upload/image/2",
+            pattern: "upload/2",
             defaults: new { controller = "StreamFileUploadLocalService", action = "Index" }
         );
     }
