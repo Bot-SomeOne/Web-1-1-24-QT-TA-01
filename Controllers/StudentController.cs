@@ -3,7 +3,7 @@ using lab1.models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace lab1.Controllers;
+namespace lab1.controllers;
 
 public class StudentController : Controller {
     // Variables
