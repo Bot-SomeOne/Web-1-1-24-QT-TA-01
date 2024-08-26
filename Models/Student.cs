@@ -1,7 +1,7 @@
 using lab1.models;
 using lab1.Models;
 
-class Student {
+public class Student {
 
     public int Id { get; set; }
     public string? Name { get; set; }
