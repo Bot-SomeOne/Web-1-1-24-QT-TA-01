@@ -18,7 +18,7 @@ namespace lab1.services
             }
         }
 
-        public async Task<bool> UploadAsync(IFormFile file, string id)
+        public async Task<bool> UploadAsync(IFormFile file, int id)
         {
             try
             {
