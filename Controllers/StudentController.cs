@@ -1,11 +1,13 @@
 
 using lab1.models;
+using lab1.services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace lab1.controllers;
 
-public class StudentController : Controller {
+public class StudentController : Controller
+{
     // Variables
     private static List<Student> listStudent = new List<Student>(){
         new Student() {
@@ -47,19 +49,22 @@ public class StudentController : Controller {
     };
 
     // Constructor
-    public StudentController() {
+    public StudentController()
+    {
     }
 
     // Actions
 
     // GET: Student
-    public IActionResult Index() {
+    public IActionResult Index()
+    {
         return View(listStudent);
     }
 
     // GET: Create
     [HttpGet]
-    public IActionResult Create() {
+    public IActionResult Create()
+    {
         // Lấy Enum Genders tạo thành list và gán vào ViewBag => Tạo radio button
         ViewBag.AllGenders = Enum.GetValues(typeof(Gender)).Cast<Gender>().ToList();
 
@@ -74,15 +79,52 @@ public class StudentController : Controller {
 
     // POST: Create
     [HttpPost]
-    public IActionResult Create(Student student) {
+    public IActionResult Create(Student student)
+    {
         student.Id = listStudent.Max(s => s.Id) + 1;
         listStudent.Add(student);
         return View("Index", listStudent);
     }
 
     // GET: Details
-    public IActionResult Details(int id) {
+    public IActionResult Details(int id)
+    {
         Student student = listStudent.FirstOrDefault(s => s.Id == id);
         return View(student);
+    }
+
+    // POST: Upload Avatar User
+    [HttpPost]
+    public async Task<ActionResult> UploadAvatar(IFormFile file, int id)
+    {
+        // Find student by id
+        Student student = listStudent.FirstOrDefault(s => s.Id == id);
+
+        if (file == null || file.Length == 0)
+        {
+            ViewBag.MessageUpLoadAvatar = false;
+            return View("Details", student);
+        }
+        // Upload the avatar
+        UploadAvatarService uploadAvatarService = new UploadAvatarService();
+        try
+        {
+            var res = await uploadAvatarService.UploadAsync(file, id);
+            if (res.check)
+            {
+                ViewBag.MessageUpLoadAvatar = true;
+                student.AvatarPath = res.filePath;
+            }
+            else
+            {
+                ViewBag.MessageUpLoadAvatar = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            ViewBag.MessageUpLoadAvatar = false;
+        }
+
+        return View("Details", student);
     }
 }
