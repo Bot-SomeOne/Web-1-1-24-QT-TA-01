@@ -16,11 +16,11 @@ class Route
          * Namespace default
          * Controller: Home
          */
-        app.MapControllerRoute(
-            name: "default",
-            pattern: "{controller=Home}/{action=Index}/{id?}",
-            defaults: new { controller = "Home", action = "Index" }
-        );
+        // app.MapControllerRoute(
+        //     name: "default",
+        //     pattern: "{controller=Home}/{action=Index}/{id?}",
+        //     defaults: new { controller = "Home", action = "Index" }
+        // );
 
         /**
          * Add a route
