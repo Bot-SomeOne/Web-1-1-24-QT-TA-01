@@ -22,7 +22,9 @@
     @foreach(var s in Model) {
         <tr>
             <td>@s.Id</td>
-            <td>@s.Name</td>
+            <td>
+                <a asp-action="Details" asp-asp-controller="Student" asp-route-id="@s.Id">@s.Name</a>
+            </td>
             <td>@s.DateOfBirth</td>
             @{
                 string str = "";
