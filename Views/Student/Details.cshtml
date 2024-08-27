@@ -2,7 +2,7 @@
 @model Student 
 
 @{
-    ViewBag.Title = "Detail + " + Model.Name;
+    ViewBag.Title = "Detail ";
 }
 
 <div class="container-xl px-4 mt-4">
@@ -16,13 +16,15 @@
                 <div class="card-body text-center">
                     <!-- Profile picture image-->
                     @{
-                        string profilePicture = Model.AvatarPath;
-                        if (profilePicture == null)
+                        string profilePicture = "";
+                        if (Model.AvatarPath == null)
                         {
-                            profilePicture = "http://bootdey.com/img/Content/avatar/avatar1.png";
+                            profilePicture = "https://avatars.githubusercontent.com/u/88392742";
+                        } else {
+                            profilePicture = Model.AvatarPath;
                         }
                     }
-                    <img class="img-account-profile rounded-circle mb-2" src="@Url.Content(profilePicture)" alt="">
+                    <img class="img-account-profile rounded-circle mb-2 img-fluid" src="@Url.Content(profilePicture)" alt="">
                     <!-- Profile picture help block-->
                     <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                     <!-- Profile picture upload button-->
