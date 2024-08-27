@@ -1,6 +1,7 @@
 
 using lab1.models;
 using lab1.services;
+using System.Collections.Generic;  
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -97,17 +98,32 @@ public class StudentController : Controller
     [HttpPost]
     public async Task<ActionResult> UploadAvatar(IFormFile file, int id)
     {
+        const int maxFileSize = 1024 * 1024; // 2MB
+
         Student student = listStudent.FirstOrDefault(s => s.Id == id);
 
         ImageService imageService = new ImageService();
         byte[] imageData = await imageService.ToByteAsync(file);
-        if (imageData != null && imageData.Length > 0)
+
+        List<string> dotImage = new List<string>(){"png", "webp", "jpeg", "jpg", "heic"};
+        string[] fileExtension = file.FileName.Split(".");
+        string extension = fileExtension[fileExtension.Length - 1];
+
+        if (imageData != null && dotImage.Contains(extension))
+        {   
+            if (imageData.Length <= maxFileSize) {
+                student.Avatar = imageData;
+                ViewBag.MessageUpLoadAvatar = "File Upload Successful.";
+                ViewBag.StatusUpdateAvatar = true;
+            } else {
+                ViewBag.MessageUpLoadAvatar = "Please Upload A Picture Smaller Than 1 MB.";
+                ViewBag.StatusUpdateAvatar = false;
+            }
+        }
+        else
         {
-            student.Avatar = imageData;
-            ViewBag.MessageUpLoadAvatar = true;
-        } else
-        {
-            ViewBag.MessageUpLoadAvatar = false;
+            ViewBag.MessageUpLoadAvatar = "File Upload Failed, Please Upload A Picture.";
+            ViewBag.StatusUpdateAvatar = false;
         }
 
         return View("Details", student);
