@@ -40,11 +40,11 @@
                         {
                             string message = "";
                             string css = "";
-                            if (ViewBag.MessageUpLoadAvatar) {
-                                message = "File Upload Successful";
+                            if (ViewBag.StatusUpdateAvatar) {
+                                message = @ViewBag.MessageUpLoadAvatar;
                                 css = "alert alert-success";
                             } else {
-                                message = "File Upload Failed";
+                                message = @ViewBag.MessageUpLoadAvatar;
                                 css = "alert alert-danger";
                             }
                             <div class="@css" role="alert">
