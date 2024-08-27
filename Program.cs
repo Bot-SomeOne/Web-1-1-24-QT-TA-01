@@ -31,6 +31,7 @@ class Program
         // Add services to the container.
         builder.Services.AddControllersWithViews();
         builder.Services.AddTransient<IBufferedFileUploadService, BufferedFileUploadLocalService>();
+        builder.Services.AddTransient<IBufferedFileUploadService, ImageService>();
         builder.Services.AddTransient<IStreamFileUploadService, StreamFileUploadLocalService>();
     }
 
