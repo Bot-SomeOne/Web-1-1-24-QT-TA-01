@@ -97,30 +97,15 @@ public class StudentController : Controller
     [HttpPost]
     public async Task<ActionResult> UploadAvatar(IFormFile file, int id)
     {
-        // Find student by id
         Student student = listStudent.FirstOrDefault(s => s.Id == id);
 
-        if (file == null || file.Length == 0)
+        ImageService imageService = new ImageService();
+        byte[] imageData = await imageService.ToByteAsync(file);
+        if (imageData != null && imageData.Length > 0)
         {
-            ViewBag.MessageUpLoadAvatar = false;
-            return View("Details", student);
-        }
-        // Upload the avatar
-        UploadAvatarService uploadAvatarService = new UploadAvatarService();
-        try
-        {
-            var res = await uploadAvatarService.UploadAsync(file, id);
-            if (res.check)
-            {
-                ViewBag.MessageUpLoadAvatar = true;
-                student.AvatarPath = res.filePath;
-            }
-            else
-            {
-                ViewBag.MessageUpLoadAvatar = false;
-            }
-        }
-        catch (Exception ex)
+            student.Avatar = imageData;
+            ViewBag.MessageUpLoadAvatar = true;
+        } else
         {
             ViewBag.MessageUpLoadAvatar = false;
         }

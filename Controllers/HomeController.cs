@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using lab1.Models;
+using lab1.models;
 
 namespace lab1.controllers;
 
