@@ -1,5 +1,5 @@
-using lab1.models;
-using lab1.Models;
+
+namespace lab1.models;
 
 public class Student
 {
