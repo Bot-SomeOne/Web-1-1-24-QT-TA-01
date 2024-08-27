@@ -7,12 +7,8 @@ namespace lab1.controllers;
 
 public class StudentController : Controller {
     // Variables
-    private List<Student> listStudent = new List<Student>();
-
-    // Constructor
-    public StudentController() {
-        this.listStudent = new List<Student>(){
-            new Student() {
+    private static List<Student> listStudent = new List<Student>(){
+        new Student() {
                 Id = 101,
                 Name = "Hai Nam",
                 Branch = Branch.IT,
@@ -21,41 +17,44 @@ public class StudentController : Controller {
                 Address = "A1-2018",
                 Email = "nam@gmail.com"
             },
-            new Student() {
-                Id = 102,
-                Name = "Minh Tu",
-                Branch = Branch.BE,
-                Gender = Gender.Female,
-                IsRegular = true,
-                Address = "A1-2019",
-                Email = "tu@gmail.com"
-            },
-            new Student() {
-                Id = 103,
-                Name = "Hoang Phong",
-                Branch = Branch.CE,
-                Gender = Gender.Male,
-                IsRegular = false,
-                Address = "A1-2020",
-                Email = "phong@gmail.com"
-            },
-            new Student() {
-                Id = 104,
-                Name = "Xuan Mai",
-                Branch = Branch.EE,
-                Gender = Gender.Female,
-                IsRegular = false,
-                Address = "A1-2021",
-                Email = "mai@gmail.com"
-            },
-        };
+        new Student() {
+            Id = 102,
+            Name = "Minh Tu",
+            Branch = Branch.BE,
+            Gender = Gender.Female,
+            IsRegular = true,
+            Address = "A1-2019",
+            Email = "tu@gmail.com"
+        },
+        new Student() {
+            Id = 103,
+            Name = "Hoang Phong",
+            Branch = Branch.CE,
+            Gender = Gender.Male,
+            IsRegular = false,
+            Address = "A1-2020",
+            Email = "phong@gmail.com"
+        },
+        new Student() {
+            Id = 104,
+            Name = "Xuan Mai",
+            Branch = Branch.EE,
+            Gender = Gender.Female,
+            IsRegular = false,
+            Address = "A1-2021",
+            Email = "mai@gmail.com"
+        },
+    };
+
+    // Constructor
+    public StudentController() {
     }
 
     // Actions
 
     // GET: Student
     public IActionResult Index() {
-        return View(this.listStudent);
+        return View(listStudent);
     }
 
     // GET: Create
@@ -76,14 +75,14 @@ public class StudentController : Controller {
     // POST: Create
     [HttpPost]
     public IActionResult Create(Student student) {
-        student.Id = this.listStudent.Count + 1;
-        this.listStudent.Add(student);
-        return View("Index", this.listStudent);
+        student.Id = listStudent.Max(s => s.Id) + 1;
+        listStudent.Add(student);
+        return View("Index", listStudent);
     }
 
     // GET: Details
     public IActionResult Details(int id) {
-        Student student = this.listStudent.FirstOrDefault(s => s.Id == id);
+        Student student = listStudent.FirstOrDefault(s => s.Id == id);
         return View(student);
     }
 }
