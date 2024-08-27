@@ -1,7 +1,8 @@
 using lab1.models;
 using lab1.Models;
 
-public class Student {
+public class Student
+{
 
     public int Id { get; set; }
     public string? Name { get; set; }
@@ -12,5 +13,6 @@ public class Student {
     public bool IsRegular { get; set; } // Hệ: true - chính qui; false - phi chính qui
     public string? Address { get; set; }
     public DateTime? DateOfBirth { get; set; }
-    public string? AvatarPath { get; set; }
+    // public string? AvatarPath { get; set; }
+    public byte[]? Avatar { get; set; }
 }
