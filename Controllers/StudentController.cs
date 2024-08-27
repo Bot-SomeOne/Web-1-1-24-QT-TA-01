@@ -94,6 +94,22 @@ public class StudentController : Controller
         return View(student);
     }
 
+    // POST: Upgrade data Students
+    [HttpPost]
+    public IActionResult Upgrade(Student student)
+    {
+        Student studentUpdate = listStudent.FirstOrDefault(s => s.Id == student.Id);
+        studentUpdate.Name = student.Name;
+        studentUpdate.Branch = student.Branch;
+        studentUpdate.Gender = student.Gender;
+        studentUpdate.IsRegular = student.IsRegular;
+        studentUpdate.Address = student.Address;
+        studentUpdate.Email = student.Email;
+
+        return View("Details", studentUpdate);
+    }
+
+
     // POST: Upload Avatar User
     [HttpPost]
     public async Task<ActionResult> UploadAvatar(IFormFile file, int id)
