@@ -18,7 +18,8 @@ public class StudentController : Controller
                 Gender = Gender.Male,
                 IsRegular = true,
                 Address = "A1-2018",
-                Email = "nam@gmail.com"
+                Email = "nam@gmail.com",
+                Point = 5.5
             },
         new Student() {
             Id = 102,
@@ -27,7 +28,8 @@ public class StudentController : Controller
             Gender = Gender.Female,
             IsRegular = true,
             Address = "A1-2019",
-            Email = "tu@gmail.com"
+            Email = "tu@gmail.com",
+            Point = 7.5
         },
         new Student() {
             Id = 103,
@@ -36,7 +38,8 @@ public class StudentController : Controller
             Gender = Gender.Male,
             IsRegular = false,
             Address = "A1-2020",
-            Email = "phong@gmail.com"
+            Email = "phong@gmail.com",
+            Point = 4
         },
         new Student() {
             Id = 104,
@@ -45,8 +48,19 @@ public class StudentController : Controller
             Gender = Gender.Female,
             IsRegular = false,
             Address = "A1-2021",
-            Email = "mai@gmail.com"
+            Email = "mai@gmail.com",
+            Point = 8.5
         },
+        new Student() {
+            Id = 105,
+            Name = "Hai Yen",
+            Branch = Branch.IT,
+            Gender = Gender.Female,
+            IsRegular = true,
+            Address = "A1-2022",
+            Email = "yenh@gmail.com",
+            Point = 6.5
+        }
     };
 
     // Constructor
@@ -82,9 +96,22 @@ public class StudentController : Controller
     [HttpPost]
     public IActionResult Create(Student student)
     {
-        student.Id = listStudent.Max(s => s.Id) + 1;
-        listStudent.Add(student);
-        return View("Index", listStudent);
+        if (ModelState.IsValid) {
+             student.Id = listStudent.Max(s => s.Id) + 1;
+            listStudent.Add(student);
+            return View("Index", listStudent);
+        }
+        
+        // Lấy Enum Genders tạo thành list và gán vào ViewBag => Tạo radio button
+        ViewBag.AllGenders = Enum.GetValues(typeof(Gender)).Cast<Gender>().ToList();
+
+        ViewBag.AllBranches = new List<SelectListItem>() {
+            new SelectListItem { Text = "IT", Value = "1" },
+            new SelectListItem { Text = "BE", Value = "2" },
+            new SelectListItem { Text = "CE", Value = "3" },
+            new SelectListItem { Text = "EE", Value = "4" },
+        };
+        return View();
     }
 
     // GET: Details
@@ -99,12 +126,14 @@ public class StudentController : Controller
     public IActionResult Upgrade(Student student)
     {
         Student studentUpdate = listStudent.FirstOrDefault(s => s.Id == student.Id);
+        
         studentUpdate.Name = student.Name;
         studentUpdate.Branch = student.Branch;
         studentUpdate.Gender = student.Gender;
         studentUpdate.IsRegular = student.IsRegular;
         studentUpdate.Address = student.Address;
         studentUpdate.Email = student.Email;
+        studentUpdate.Point = student.Point;
 
         return View("Details", studentUpdate);
     }
