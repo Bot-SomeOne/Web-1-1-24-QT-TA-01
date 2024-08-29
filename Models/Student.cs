@@ -12,9 +12,8 @@ public class Student
     public string? Name { get; set; }
 
     [Required(ErrorMessage = "Email không được để trống")]
-    // [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9._]+\.[A-Za-z]{2,4}")]
-    [RegularExpression(@"^[a-z0-9](\.?[a-z0-9]){5,}@gmail\.com$", ErrorMessage = "Email không hợp lệ - Phải có đuôi @gmail.com")]
     [DataType(DataType.EmailAddress)]
+    [RegularExpression(@"^[a-zA-Z0-9._%+-]+@gmail\.com$", ErrorMessage = "Email không hợp lệ - Phải có đuôi @gmail.com")]
     public string? Email { get; set; }
 
     [DataType(DataType.Password)]
