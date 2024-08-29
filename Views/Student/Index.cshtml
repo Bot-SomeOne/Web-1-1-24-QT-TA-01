@@ -18,46 +18,92 @@
             <th>Email</th>
             <th>Điểm</th>
         </tr>
-    </thead> 
+    </thead>
     <tbody>
-    @foreach(var s in Model) {
-        <tr>
-            <td>@s.Id</td>
-            <td>
-                <a asp-action="Details" asp-asp-controller="Student" asp-route-id="@s.Id">@s.Name</a>
-            </td>
-            <td>@s.DateOfBirth</td>
-            @{
-                string str = "";
-                switch(s.Branch)
-                {   
-                    case Branch.IT:
-                        str = "Công nghệ thông tin";
-                        break;
-                    case Branch.BE:
-                        str = "Kinh tế";
-                        break;
-                    case Branch.CE:
-                        str = "Công trình";
-                        break;
-                    case Branch.EE:
-                        str = "Điện - Điện tử";
-                        break;
+        @foreach (var s in Model)
+        {
+            <tr>
+                <td>@s.Id</td>
+                <td>
+                    <a asp-action="Details" asp-asp-controller="Student" asp-route-id="@s.Id">@s.Name</a>
+                </td>
+                <td>@s.DateOfBirth</td>
+                @{
+                    string str = "";
+                    switch (s.Branch)
+                    {
+                        case Branch.IT:
+                            str = "Công nghệ thông tin";
+                            break;
+                        case Branch.BE:
+                            str = "Kinh tế";
+                            break;
+                        case Branch.CE:
+                            str = "Công trình";
+                            break;
+                        case Branch.EE:
+                            str = "Điện - Điện tử";
+                            break;
+                    }
                 }
-            }
-            <td>@str</td>
-            <td>@(s.Gender == Gender.Male ? "Nam" : "Nữ")</td>
-            <td>@(s.IsRegular ? "Chính quy" : "Phi chính quy")</td>
-            <td>@s.Address</td>
-            <td>@s.Email</td>
-            <td>@s.Point</td>
-        </tr>
-    }
+                <td>@str</td>
+                <td>@(s.Gender == Gender.Male ? "Nam" : "Nữ")</td>
+                <td>@(s.IsRegular ? "Chính quy" : "Phi chính quy")</td>
+                <td>@s.Address</td>
+                <td>@s.Email</td>
+                <td>@s.Point</td>
+                <td>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal-@s.Id">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-trash" viewBox="0 0 16 16">
+                            <path
+                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                            <path
+                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                        </svg>
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="deleteModal-@s.Id" tabindex="-1" role="dialog"
+                        aria-labelledby="deleteModalLabel-@s.Id" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteModalLabel-@s.Id">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                            class="bi bi-exclamation-triangle" viewBox="0 0 16 16">
+                                            <path
+                                                d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.15.15 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.2.2 0 0 1-.054.06.1.1 0 0 1-.066.017H1.146a.1.1 0 0 1-.066-.017.2.2 0 0 1-.054-.06.18.18 0 0 1 .002-.183L7.884 2.073a.15.15 0 0 1 .054-.057m1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767z" />
+                                            <path
+                                                d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z" />
+                                        </svg>
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Bạn Muốn Xoá Sinh Viên: @s.Id ?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
+                                    <form asp-action="Delete" asp-asp-controller="Student" method="post">
+                                        <input type="hidden" name="id" value="@s.Id" />
+                                        <button type="submit" class="btn btn-danger">Đồng Ý</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 
 @section Scripts {
     <script>
-        
+
     </script>
 }
