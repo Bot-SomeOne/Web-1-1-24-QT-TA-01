@@ -42,5 +42,5 @@ public class Student
 
     [Range(0, 10, ErrorMessage = "Điểm phải nằm trong khoảng từ 0 đến 10")]
     [Required(ErrorMessage = "Điểm không được để trống")]
-    public double Point { get; set; }
+    public double? Point { get; set; }
 }
