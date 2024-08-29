@@ -68,5 +68,14 @@ class Route
             pattern: "upload/2",
             defaults: new { controller = "StreamFileUpload", action = "Index" }
         );
+
+        /**
+         * Add a route for Test 
+         */
+        app.MapControllerRoute(
+            name: "Test",
+            pattern: "{controller=Test}/{action=Index}/{id?}",
+            defaults: new { controller = "Test", action = "Index" }
+        );
     }
 }
