@@ -118,10 +118,18 @@ public class StudentController : Controller
 
         Student student = listStudent.FirstOrDefault(s => s.Id == id);
 
+        if (file == null)
+        {
+            ViewBag.MessageUpLoadAvatar = "Please Upload A Picture.";
+            ViewBag.StatusUpdateAvatar = false;
+            return View("Details", student);
+        }
+
         ImageService imageService = new ImageService();
         byte[] imageData = await imageService.ToByteAsync(file);
 
         List<string> dotImage = new List<string>(){"png", "webp", "jpeg", "jpg", "heic"};
+        
         string[] fileExtension = file.FileName.Split(".");
         string extension = fileExtension[fileExtension.Length - 1];
 
