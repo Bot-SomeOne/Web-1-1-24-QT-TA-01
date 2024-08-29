@@ -13,9 +13,9 @@
 </head>
 
 <body class=" custom-bg-color">
-    <header>
-        @Html.Partial("_PartialTopNav")
-    </header>
+    
+    @await Component.InvokeAsync("TopNav")
+
     <div class="container">
         @* 164 183 189 *@
         <main role="main" class="pb-3">

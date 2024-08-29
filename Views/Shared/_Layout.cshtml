@@ -13,9 +13,9 @@
 </head>
 
 <body>
-    <header>
-        @Html.Partial("_PartialTopNav")
-    </header>
+
+    @await Component.InvokeAsync("TopNav")
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
