@@ -138,6 +138,14 @@ public class StudentController : Controller
         return View("Details", studentUpdate);
     }
 
+    // POST: Delete Student
+    [HttpPost]
+    public IActionResult Delete(int id)
+    {
+        Student student = listStudent.FirstOrDefault(s => s.Id == id);
+        listStudent.Remove(student);
+        return View("Index", listStudent);
+    }
 
     // POST: Upload Avatar User
     [HttpPost]
