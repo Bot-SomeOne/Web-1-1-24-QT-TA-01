@@ -5,4 +5,4 @@
 # Description
 - Responsive save example:
     + Student: Ly Tran Vinh - 222631159
-- This is [lab1](https://drive.google.com/drive/folders/1OgKTA-QHvqH9YxsCD-gnzDaihNv7E45M) 
+- This is [lab2](https://drive.google.com/drive/folders/1OgKTA-QHvqH9YxsCD-gnzDaihNv7E45M) 
