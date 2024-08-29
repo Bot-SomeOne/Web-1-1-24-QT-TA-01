@@ -17,8 +17,8 @@ public class TopNav : ViewComponent
             },
             new NavItem() {
                 Controller = "Home",
-                Action = "Privacy",
-                Text = "Privacy"
+                Action = "Contact",
+                Text = "Contacts"
             },
             new NavItem() {
                 Controller = "Student",
