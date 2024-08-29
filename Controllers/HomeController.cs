@@ -18,8 +18,11 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult Privacy()
+    public IActionResult Contact()
     {
+        @ViewBag.GitHubUser = "Youknow2509"; 
+        // @ViewBag.GitHubUser = "Bot-SomeOne"; 
+        
         return View();
     }
 

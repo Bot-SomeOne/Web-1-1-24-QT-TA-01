@@ -1,0 +1,55 @@
+@{
+    ViewData["Title"] = "Contact";
+}
+
+<div class="container">
+    <div class="github row d-flex">
+        <div class="col-3 row-sm-4 mx-auto">
+            <img src="" alt="Loadding" id="avatar_url" class="img-fluid bg-info rounded-circle">
+        </div>
+        <div class="col-8 row-sm-4 align-self-center">
+            <h2>
+                <i class="fab fa-github"></i>
+                <p>
+                    User name:
+                    <a href="" target="_blank" id="login"></a>
+                </p>
+            </h2>
+            <h1 id="name"></h1>
+            <div>
+                <h2>Contacts:</h2>
+                <table class="table" id="contacts">
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        @{
+            string UrlFetch = "https://api.github.com/users/" + @ViewBag.GitHubUser;
+        }
+            $(document).ready(function () {
+                $.ajax({
+                    url: '@UrlFetch',
+                    type: 'GET',
+                    success: function (data) {
+                        $('#login').text(data.login);
+                        $('#login').attr('href', "https://github.com/" + data.login)
+                        $('#name').text("My name: " + data.name);
+                        $('#avatar_url').attr('src', data.avatar_url);
+                        const contacts_data = data.bio.split('\r\n');
+                        $('#contacts').empty();
+                        contacts_data.forEach(contact => {
+                            $('#contacts').append('<tr><td>&emsp;' + contact + '</td></tr>');
+                        });
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                })
+            });
+    </script>
+}
