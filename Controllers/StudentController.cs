@@ -1,7 +1,8 @@
 
 using lab1.models;
+using lab1.models.viewmodels;
 using lab1.services;
-using System.Collections.Generic;  
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -96,12 +97,13 @@ public class StudentController : Controller
     [HttpPost]
     public IActionResult Create(Student student)
     {
-        if (ModelState.IsValid) {
-             student.Id = listStudent.Max(s => s.Id) + 1;
+        if (ModelState.IsValid)
+        {
+            student.Id = listStudent.Max(s => s.Id) + 1;
             listStudent.Add(student);
             return View("Index", listStudent);
         }
-        
+
         // Lấy Enum Genders tạo thành list và gán vào ViewBag => Tạo radio button
         ViewBag.AllGenders = Enum.GetValues(typeof(Gender)).Cast<Gender>().ToList();
 
@@ -123,18 +125,22 @@ public class StudentController : Controller
 
     // POST: Upgrade data Students
     [HttpPost]
-    public IActionResult Upgrade(Student student)
+    public IActionResult Upgrade(StudentUpdateViewModel student)
     {
         Student studentUpdate = listStudent.FirstOrDefault(s => s.Id == student.Id);
-        
-        studentUpdate.Name = student.Name;
-        studentUpdate.Branch = student.Branch;
-        studentUpdate.Gender = student.Gender;
-        studentUpdate.IsRegular = student.IsRegular;
-        studentUpdate.Address = student.Address;
-        studentUpdate.Email = student.Email;
-        studentUpdate.Point = student.Point;
+        if (ModelState.IsValid)
+        {
+            studentUpdate.Name = student.Name;
+            studentUpdate.Branch = student.Branch;
+            studentUpdate.Gender = student.Gender;
+            studentUpdate.IsRegular = student.IsRegular;
+            studentUpdate.Address = student.Address;
+            studentUpdate.Email = student.Email;
+            studentUpdate.Point = student.Point;
+            studentUpdate.DateOfBirth = student.DateOfBirth;
 
+            return View("Index", listStudent);
+        } 
         return View("Details", studentUpdate);
     }
 
@@ -165,18 +171,21 @@ public class StudentController : Controller
         ImageService imageService = new ImageService();
         byte[] imageData = await imageService.ToByteAsync(file);
 
-        List<string> dotImage = new List<string>(){"png", "webp", "jpeg", "jpg", "heic"};
-        
+        List<string> dotImage = new List<string>() { "png", "webp", "jpeg", "jpg", "heic" };
+
         string[] fileExtension = file.FileName.Split(".");
         string extension = fileExtension[fileExtension.Length - 1];
 
         if (imageData != null && dotImage.Contains(extension))
-        {   
-            if (imageData.Length <= maxFileSize) {
+        {
+            if (imageData.Length <= maxFileSize)
+            {
                 student.Avatar = imageData;
                 ViewBag.MessageUpLoadAvatar = "File Upload Successful.";
                 ViewBag.StatusUpdateAvatar = true;
-            } else {
+            }
+            else
+            {
                 ViewBag.MessageUpLoadAvatar = "Please Upload A Picture Smaller Than 1 MB.";
                 ViewBag.StatusUpdateAvatar = false;
             }
