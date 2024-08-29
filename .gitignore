@@ -406,3 +406,11 @@ ASALocalRun/
 
 # Build and debug build
 **/Debug/
+
+**/obj/
+obj/
+
+**/bin/
+bin/
+
+*.sln
