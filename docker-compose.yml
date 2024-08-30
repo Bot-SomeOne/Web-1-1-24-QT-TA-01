@@ -3,7 +3,7 @@ version: '3.8'
 services:
   sql_sv:
     image: mcr.microsoft.com/mssql/server
-    container_name: sql_sv
+    container_name: DB_Lab_Website
     environment:
       ACCEPT_EULA: 'Y'
       SA_PASSWORD: 'P@ss12345'
