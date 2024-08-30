@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  sql_sv:
+    image: mcr.microsoft.com/mssql/server
+    container_name: sql_sv
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: 'P@ss12345'
+    ports:
+      - '1435:1433'
+    volumes:
+      - /Users/v/code/Web-1-1-24/labs/DatabaseLocal:/var/opt/mssql/
+    restart: unless-stopped
