@@ -62,7 +62,7 @@ public class LearnerController : Controller
         if (learner == null)
             return NotFound();
 
-        ViewBag MajorID = GetViewBagMajorID();
+        ViewBag.MajorID = GetViewBagMajorID();
         return View(learner);
     }
 
@@ -82,7 +82,7 @@ public class LearnerController : Controller
             try
             {
                 db.Update(learner);
-                db.SaveChanges;
+                db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -95,7 +95,7 @@ public class LearnerController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
-        ViewBag MajorId = GetViewBagMajorID();
+        ViewBag.MajorId = GetViewBagMajorID();
         return View(learner);
     }
 

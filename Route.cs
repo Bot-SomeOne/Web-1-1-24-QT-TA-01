@@ -77,5 +77,16 @@ class Route
             pattern: "{controller=Test}/{action=Index}/{id?}",
             defaults: new { controller = "Test", action = "Index" }
         );
+
+        /**
+         * Add a route for Learner
+         */
+        app.MapControllerRoute(
+            name: "Learner",
+            pattern: "admin/learner/list/{id?}",
+            defaults: new { controller = "Learner", action = "Index" }
+        );
+
+        app.Run();
     }
 }
