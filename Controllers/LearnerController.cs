@@ -19,10 +19,22 @@ public class LearnerController : Controller
     }
 
     // GET: Learner
-    public IActionResult Index()
+    public IActionResult Index(int? id)
     {
-        var learners = db.Learners.Include(m => m.Major).ToList();
-        return View(learners);
+        if (id == null) {
+            var learners = db.Learners
+                .Include(m => m.Major)
+                .ToList();
+                
+            return View(learners);
+        } else {
+            var learners = db.Learners
+                .Include(m => m.Major)
+                .Where(m => m.MajorID == id)
+                .ToList();
+
+            return View(learners);
+        }
     }
 
     // GET: Create a new Learner
