@@ -11,6 +11,7 @@ public class LearnerController : Controller
 {
     // Variables
     private SchoolContext db;
+    private int pageSize = 3;
 
     // Constructor
     public LearnerController(SchoolContext context)
@@ -21,20 +22,21 @@ public class LearnerController : Controller
     // GET: Learner
     public IActionResult Index(int? id)
     {
-        if (id == null) {
-            var learners = db.Learners
-                .Include(m => m.Major)
-                .ToList();
-                
-            return View(learners);
-        } else {
-            var learners = db.Learners
-                .Include(m => m.Major)
-                .Where(m => m.MajorID == id)
-                .ToList();
+        var learners = db.Learners
+            .Include(m => m.Major);
 
-            return View(learners);
+        if (id != null) {
+            learners = db.Learners
+                .Where(l => l.MajorID == id)
+                .Include(m => m.Major);
         }
+
+        int pageNum = (int)Math.Ceiling(learners.Count() / (float)pageSize);
+        ViewBag.pageNum = pageNum;
+
+        var result = learners.Take(pageSize).ToList();
+
+        return View(result);
     }
 
     // GET: Create a new Learner
