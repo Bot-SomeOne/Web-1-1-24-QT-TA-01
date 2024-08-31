@@ -152,6 +152,15 @@ public class LearnerController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    public ActionResult LearnerByMajorID(int id) {
+        var learners = db.Learners
+           .Include(m => m.Major)
+           .Where(m => m.MajorID == id)
+           .ToList();
+
+        return PartialView("LearnerTable", learners);
+    }
+
     /**
      * List Help funtion
      */
