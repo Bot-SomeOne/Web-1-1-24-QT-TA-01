@@ -99,6 +99,47 @@ public class LearnerController : Controller
         return View(learner);
     }
 
+    // GET: Delete a Learner
+    public IActionResult Delete(int id)
+    {
+        if (id == null || db.Learners == null)
+            return NotFound();
+
+        var learner = db.Learners.Include(l => l.Major)
+                .Include(e => e.Enrollments)
+                .FirstOrDefault(m => m.LearnerID == id);
+
+        if (learner == null)
+        {
+            return NotFound();
+        }
+
+        if (learner.Enrollments.Count() > 0)
+        {
+            return Content("This learner has some enrollments, can't delete!");
+        }
+
+        return View(learner);
+    }
+
+    // POST: Delete a Learner
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public IActionResult DeleteConfirmed(int id)
+    {
+        if (db.Learners == null)
+        {
+            return Problem("Entity set 'Learners' is null");
+        }
+        var learner = db.Learners.Find(id);
+        if (learner != null)
+        {
+            db.Learners.Remove(learner);
+        }
+        db.SaveChanges();
+        return RedirectToAction(nameof(Index));
+    }
+
     /**
      * List Help funtion
      */
