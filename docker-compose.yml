@@ -10,5 +10,9 @@ services:
     ports:
       - '1435:1433'
     volumes:
-      - /Users/v/code/Web-1-1-24/labs/DatabaseLocal:/var/opt/mssql/
+      # Use in local
+      # - /Users/v/code/Web-1-1-24/labs/DatabaseLocal:/var/opt/mssql/ 
+      # Use in code space github
+      - /workspaces/Web-1-1-24-QT-TA-01/DatabaseLocal:/var/opt/mssql/ 
     restart: unless-stopped
+    user: '1000:1000'  # Replace with the appropriate non-root user ID and group ID
