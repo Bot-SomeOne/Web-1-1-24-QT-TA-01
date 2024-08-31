@@ -6,9 +6,9 @@ public class SchoolContext : DbContext
 {   
     // Variables
     public virtual DbSet<Course> Courses { get; set; }
-    public virtual DbSet<Learner> Learner { get; set; }
-    public virtual DbSet<Enrollment> Enrollment { get; set; }
-    public virtual DbSet<Major> Major { get; set; }
+    public virtual DbSet<Learner> Learners { get; set; }
+    public virtual DbSet<Enrollment> Enrollments { get; set; }
+    public virtual DbSet<Major> Majors { get; set; }
     
     // Constructor
     public SchoolContext(DbContextOptions<SchoolContext> options) : base(options) { }
