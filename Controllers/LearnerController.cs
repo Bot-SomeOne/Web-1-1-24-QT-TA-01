@@ -51,13 +51,62 @@ public class LearnerController : Controller
         return View();
     }
 
+    // GET: Edit a Learner
+    public IActionResult Edit(int id)
+    {
+        if (id == null || db.Learners == null)
+            return NotFound();
+
+        var learner = db.Learners.Find(id);
+
+        if (learner == null)
+            return NotFound();
+
+        ViewBag MajorID = GetViewBagMajorID();
+        return View(learner);
+    }
+
+    // POST: Edit a Learner
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Edit(int id,
+        [Bind("LearnerID, FirstMidName, LastName, MajorID, EnrollmentDate")]
+            Learner learner
+    )
+    {
+        if (id != learner.LearnerID)
+            return NotFound();
+
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                db.Update(learner);
+                db.SaveChanges;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!LearnerExists(learner.LearnerID))
+                {
+                    return NotFound();
+                }
+                else
+                    throw;
+            }
+            return RedirectToAction(nameof(Index));
+        }
+        ViewBag MajorId = GetViewBagMajorID();
+        return View(learner);
+    }
+
     /**
-     * List Help funtion
-     */
+ * List Help funtion
+ */
 
     // Help funtion Get ViewBag MajorID 
-    private List<SelectListItem> GetViewBagMajorID() {
-        var majors = new List<SelectListItem>(); 
+    private List<SelectListItem> GetViewBagMajorID()
+    {
+        var majors = new List<SelectListItem>();
 
         foreach (var item in db.Majors)
         {
@@ -70,7 +119,12 @@ public class LearnerController : Controller
             );
         }
 
-        return majors; 
+        return majors;
     }
-    
+
+    // Help function to check if Learner exists
+    private bool LearnerExists(int id)
+    {
+        return (db.Learners?.Any(e => e.LearnerID == id)).GetValueOrDefault();
+    }
 }
