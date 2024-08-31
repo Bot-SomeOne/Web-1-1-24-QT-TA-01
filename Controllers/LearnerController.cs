@@ -17,6 +17,8 @@ public class LearnerController : Controller
     {
         db = context;
     }
+
+    // GET: Learner
     public IActionResult Index()
     {
         var learners = db.Learners.Include(m => m.Major).ToList();
