@@ -2,6 +2,8 @@
 using lab1.models;
 using Microsoft.Extensions.ObjectPool;
 
+namespace lab1.models;
+
 public class Major {
 
     // Var

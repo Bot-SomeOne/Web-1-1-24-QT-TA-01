@@ -3,6 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using lab1.models;
 using Microsoft.Extensions.ObjectPool;
 
+namespace lab1.models;
+
 public class Enrollment {
 
     // Var
