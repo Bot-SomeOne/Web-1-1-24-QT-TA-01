@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using lab1.models;
 
+namespace lab1.viewcomponents;
+
 public class TopNav : ViewComponent
 {
     // Variables
