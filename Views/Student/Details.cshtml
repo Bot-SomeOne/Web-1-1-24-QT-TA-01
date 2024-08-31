@@ -13,7 +13,7 @@
             <!-- Profile picture card-->
             <div class="card mb-4 mb-xl-0">
                 <div>
-                    <form asp-action="UploadAvatar" asp-asp-controller="Student" asp-route-id="@Model.Id" enctype="multipart/form-data">
+                    <form asp-action="UploadAvatar" asp-controller="Student" asp-route-id="@Model.Id" enctype="multipart/form-data">
                         <div class="d-flex justify-content-center mb-4">
                         @{
                             if (Model.Avatar == null)
@@ -60,7 +60,7 @@
             <div class="card mb-4">
                 <div class="card-header">Account Details</div>
                 <div class="card-body">
-                    <form asp-action="Upgrade" asp-asp-controller="Student">
+                    <form asp-action="Upgrade" asp-controller="Student">
                         <!-- Form Group (username)-->
                         <div class="mb-3">
                             <label class="small mb-1" asp-for="Name">Name</label>

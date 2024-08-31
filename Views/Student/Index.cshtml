@@ -26,7 +26,7 @@
             <tr>
                 <td>@s.Id</td>
                 <td>
-                    <a asp-action="Details" asp-asp-controller="Student" asp-route-id="@s.Id">@s.Name</a>
+                    <a asp-action="Details" asp-controller="Student" asp-route-id="@s.Id">@s.Name</a>
                 </td>
                 <td>@s.DateOfBirth</td>
                 @{
@@ -89,7 +89,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
-                                    <form asp-action="Delete" asp-asp-controller="Student" method="post">
+                                    <form asp-action="Delete" asp-controller="Student" method="post">
                                         <input type="hidden" name="id" value="@s.Id" />
                                         <button type="submit" class="btn btn-danger">Đồng Ý</button>
                                     </form>
