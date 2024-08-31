@@ -100,8 +100,8 @@ public class LearnerController : Controller
     }
 
     /**
- * List Help funtion
- */
+     * List Help funtion
+     */
 
     // Help funtion Get ViewBag MajorID 
     private List<SelectListItem> GetViewBagMajorID()
