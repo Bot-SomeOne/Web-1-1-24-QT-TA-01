@@ -7,7 +7,7 @@ public class Learner {
     // Var
     public int LearnerID { get; set; }
     public string LastName { get; set; }
-    public string FirsMidName { get; set; }
+    public string FirstMidName { get; set; }
     public DateTime EnrollmentDate { get; set; }
     public int MajorID { get; set; }
     public virtual Major? Major { get; set; }
