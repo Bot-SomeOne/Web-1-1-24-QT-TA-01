@@ -154,6 +154,7 @@ public class LearnerController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    // GET: Learner by MajorID - Help ajax
     public ActionResult LearnerByMajorID(int id) {
         var learners = db.Learners
            .Include(m => m.Major)
