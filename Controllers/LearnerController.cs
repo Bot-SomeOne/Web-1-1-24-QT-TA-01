@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 //
 using lab1.data;
 using lab1.models;
@@ -25,7 +26,8 @@ public class LearnerController : Controller
         var learners = db.Learners
             .Include(m => m.Major);
 
-        if (id != null) {
+        if (id != null)
+        {
             learners = db.Learners
                 .Where(l => l.MajorID == id)
                 .Include(m => m.Major);
@@ -33,7 +35,8 @@ public class LearnerController : Controller
 
         int pageNum = (int)Math.Ceiling(learners.Count() / (float)pageSize);
         ViewBag.pageNum = pageNum;
-
+        ViewBag.pageIndexCurrent = 1;
+        
         var result = learners.Take(pageSize).ToList();
 
         return View(result);
@@ -155,7 +158,8 @@ public class LearnerController : Controller
     }
 
     // GET: Learner by MajorID - Help ajax
-    public ActionResult LearnerByMajorID(int id) {
+    public ActionResult LearnerByMajorID(int id)
+    {
         var learners = db.Learners
            .Include(m => m.Major)
            .Where(m => m.MajorID == id)
@@ -163,6 +167,37 @@ public class LearnerController : Controller
 
         return PartialView("LearnerTable", learners);
     }
+
+    // GET: 
+    public ActionResult LearnerFilter(int? id, string? keyword, int? pageIndex)
+    {
+        IQueryable<Learner> learners = db.Learners;
+        int page = (int)(pageIndex == null || pageIndex <= 0 ? 1 : pageIndex);
+
+        if (id != null)
+        {
+            learners = learners.Where(l => l.MajorID == id);
+            ViewBag.MajorID = id;
+        }
+
+        if (!string.IsNullOrEmpty(keyword))
+        {
+            learners = learners.Where(l => l.FirstMidName.ToLower().Contains(keyword.ToLower()));
+            ViewBag.keyword = keyword;
+        }
+
+        int pageNum = (int)Math.Ceiling(learners.Count() / (float)pageSize);
+        ViewBag.pageNum = pageNum;
+        ViewBag.pageIndexCurrent = page;
+
+        var result = learners.Skip(pageSize * (page - 1))
+            .Take(pageSize)
+            .Include(m => m.Major)
+            .ToList();
+
+        return PartialView("LearnerTable", result);
+    }
+
 
     /**
      * List Help funtion
