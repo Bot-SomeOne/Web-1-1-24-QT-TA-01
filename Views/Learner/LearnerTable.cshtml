@@ -29,3 +29,14 @@
         </tbody>
     </table>
 </table>
+
+<ul class="pagination">
+    @for (int i = 1; i <= ViewBag.pageNum; i++)
+    {
+        <li class="page-item @(ViewBag.pageIndexCurrent == i ? "active" : "")" page="@i" 
+            @(ViewBag.MajorID != null ? "mid='@ViewBag.MajorID'" : "") 
+            @(ViewBag.keyword != null ? "keyword='@Viewbag.keyword'" : "")>
+            <a class="page-link">@i</a>
+        </li>
+    }
+</ul>
