@@ -22,6 +22,7 @@ public class Major : ViewComponent
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
-        return View("RenderMajor", majors);
+        // return View("RenderMajor", majors);
+        return View("RenderDropMajor", majors);
     }
 }

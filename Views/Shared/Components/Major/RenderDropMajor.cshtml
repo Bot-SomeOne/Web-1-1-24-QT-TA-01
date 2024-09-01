@@ -1,0 +1,83 @@
+@model IEnumerable<lab1.models.Major>
+
+@{
+    var majors = new List<SelectListItem>();
+
+    foreach (var item in Model)
+    {
+        majors.Add(
+        new SelectListItem
+                {
+                    Text = item.MajorName,
+                    Value = item.MajorID.ToString()
+                }
+        );
+    }
+
+    ViewBag.MajorID = majors;
+}
+
+<div class="dropdown-container">
+    <button type="button" id="filterButton" class="btn rounded-3 wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter"
+            viewBox="0 0 16 16">
+            <path
+                d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5" />
+        </svg>
+        Filter Major
+    </button>
+    @Html.DropDownList("MajorID",
+            ViewBag.MajorID as List<SelectListItem>,
+            "None",
+            new
+            {
+                @class = "form-control; dropdown-content;",
+                @id = "filterDropdown"
+            })
+</div>
+
+<style>
+    .dropdown-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .dropdown-content {
+        display: none;
+        margin-left: 10px;
+    }
+
+    .dropdown-content.show {
+        display: block;
+    }
+</style>
+
+@* Render script as a raw string *@
+@Html.Raw(@"
+<script>
+    $(document).ready(function () {
+        $('#filterButton').click(function () {
+            $('#filterDropdown').toggle();
+        });
+
+        $('#filterDropdown').change(function () {
+            var majorID = $(this).val();
+            if (majorID != 'ALL') {
+                $.ajax({
+                    url: '/Learner/LearnerFilter',
+                    type: 'GET',
+                    data: {
+                        id: majorID
+                    },
+                    success: function (data) {
+                        $('#content').html(data);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('AJAX Error: ' + status + error);
+                    }
+                });
+            }
+        });
+    });
+</script>
+")
