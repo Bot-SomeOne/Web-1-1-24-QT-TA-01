@@ -8,6 +8,18 @@
 <div class="ms-2 mx-2">
     <h1>Learner List</h1>
     @await Component.InvokeAsync("Major")
+    @* Form tim kiem *@
+    <form class="">
+        <div class="input-group">
+            <input id="keyword" type="text" class="form-control" 
+                name="keyword" placeholder="Search learner" />
+            <button id="btnSearch" class="btn btn-primary" type="button">
+                <i class="fas fa-search"></i>
+                Search
+            </button>
+        </div>
+    </form>
+    @*  *@
     <div id="content">
         <table class="table table-striped">
             <thead>
@@ -35,21 +47,69 @@
                 }
             </tbody>
         </table>
+        @* Nav phan trang *@
+        <ul class="pagination">
+            @for (int i = 1; i <= ViewBag.pageNum; i++)
+            {
+                <li class="page-item @(ViewBag.pageIndexCurrent == i ? "active" : "")" page="@i"
+                    @(ViewBag.MajorID != null ? "mid='@ViewBag.MajorID'" : "")
+                    @(ViewBag.keyword != null ? "keyword='@Viewbag.keyword'" : "")
+                >
+                    <a class="page-link">@i</a>
+                </li>
+            }
+        </ul>
     </div>
     <a asp-action="Create" class="btn btn-primary">Create New Student</a>
 </div>
 
 @section Scripts {
     <script>
-        $("li").click(function () {
-            var id = $(this).attr("id");
-            @* alert(id); *@
-            $.ajax({            
-                url: "/Learner/LearnerByMajorID",
+        @* Ajax search *@
+        $("body").on("click", "li.page-item", function(e) {
+            var page = $(this).attr("page");
+            var mid = $(this).attr("mid");
+            var keyword = $(this).attr("keyword");
+            var data = {
+                id: mid,
+                keyword: keyword,
+                pageIndex: page
+            };
+            @* alert(`pageIndex: ${page}, id: ${mid}, keyword: ${keyword}`); *@
+            $.ajax({
+                url: "/Learner/LearnerFilter",
                 type: "GET",
-                data: { id: id },
+                data: data,
                 success: function (data) {
-                    $("#content").html(data);
+                    $("div#content").html(data);
+                }
+            });
+        });
+
+        $("li.nav-item").click(function(e) {
+            var id = $(this).attr("id");
+            var data = { id:id };
+            @* alert(`id: ${id}`); *@
+            $.ajax({
+                url: "/Learner/LearnerFilter",
+                type: "GET",
+                data: data,
+                success: function (data) {
+                    $("div#content").html(data);
+                }
+            });
+        });
+
+        $("button#btnSearch").click(function() {
+            var keyword = $("#keyword").val();
+            var data = { keyword: keyword };
+            @* alert(`keyword: ${keyword}`); *@
+            $.ajax({
+                url: "/Learner/LearnerFilter",
+                type: "GET",
+                data: data,
+                success: function (data) {
+                    $("div#content").html(data);
                 }
             });
         });
