@@ -9,7 +9,7 @@ namespace lab1.taghelpers;
 public class ImageTagHelper : TagHelper
 {
     [HtmlAttributeName("image-bytes")]
-    public byte[] ImageBytes { get; set; }
+    public byte[]? ImageBytes { get; set; }
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
