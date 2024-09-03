@@ -74,7 +74,7 @@
                 };
         @* alert(`pageIndex: ${page}, id: ${mid}, keyword: ${keyword}`); *@
                     $.ajax({
-                        url: "Admin/Learner/LearnerFilter",
+                        url: "/Admin/Learner/LearnerFilter",
                         type: "GET",
                         data: data,
                         success: function (data) {
@@ -88,7 +88,7 @@
             var data = { id: id };
         @* alert(`id: ${id}`); *@
                 $.ajax({
-                    url: "Admin/Learner/LearnerFilter",
+                    url: "/Admin/Learner/LearnerFilter",
                     type: "GET",
                     data: data,
                     success: function (data) {
@@ -106,7 +106,7 @@
 
         const helpSearchAjaxRequest = (data) => {
             $.ajax({
-                    url: "Admin/Learner/LearnerFilter",
+                    url: "/Admin/Learner/LearnerFilter",
                     type: "GET",
                     data: data,
                     success: function (data) {

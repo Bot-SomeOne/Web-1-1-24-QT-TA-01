@@ -8,12 +8,14 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Dashboard - Admin</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link href="~/css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <script src="~/js/scripts.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script>
-
         window.addEventListener('DOMContentLoaded', event => {
 
             // Toggle the side navigation
@@ -75,12 +77,10 @@
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         <div class="sb-sidenav-menu-heading">Core</div>
-                        <a class="nav-link" 
-                            href="@Url.Action("Index", "Home", new { area = "Admin" })">
+                        <a class="nav-link" asp-area="Admin" asp-controller="Home" asp-action="Index">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard Admin
                         </a>
-                        <div class="sb-sidenav-menu-heading">Addons</div>
                         <a class="nav-link" asp-area="Admin" asp-controller="Student" asp-action="Index">
                             <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                             Students
@@ -123,6 +123,7 @@
         </div>
         <!-- End Right content -->
     </div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 
