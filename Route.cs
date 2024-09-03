@@ -12,6 +12,18 @@ class Route
         app.UseAuthorization();
 
         /**
+         * Add a route for Areas Admin
+         */
+        app.MapAreaControllerRoute(
+            name: "areas",
+            areaName: "Admin",
+            pattern: "Admin/{controller=Home}/{action=Index}/{id?}",
+            defaults: new { areas = "Admin", controller = "Home", action = "Index" }
+        );
+
+
+        // Route don't work in areas controller
+        /**
          * Add a route 
          * Namespace default
          * Controller: Home
@@ -38,16 +50,6 @@ class Route
             name: "upload small large",
             pattern: "upload/2",
             defaults: new { controller = "StreamFileUpload", action = "Index" }
-        );
-
-        /**
-         * Add a route for Areas
-         */
-        app.MapAreaControllerRoute(
-            name: "areas",
-            areaName: "Admin",
-            pattern: "Admin/{controller=Home}/{action=Index}/{id?}",
-            defaults: new { areas="Admin", controller = "Home", action = "Index" }
         );
 
         app.Run();
