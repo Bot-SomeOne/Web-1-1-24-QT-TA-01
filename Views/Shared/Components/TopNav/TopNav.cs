@@ -26,6 +26,12 @@ public class TopNav : ViewComponent
                 Controller = "Student",
                 Action = "Index",
                 Text = "List Students"
+            },
+            new NavItem() {
+                Area = "Admin",
+                Controller = "Home",
+                Action = "Index",
+                Text = "Admin Dashboard"
             }   
         };
     }
