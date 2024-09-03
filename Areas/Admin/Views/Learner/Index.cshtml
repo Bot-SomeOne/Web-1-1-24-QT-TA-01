@@ -1,0 +1,127 @@
+@model IEnumerable<Learner>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="ms-2 mx-2">
+    <h1>Learner List</h1>
+    @await Component.InvokeAsync("Major")
+    @* Form tim kiem *@
+    <form class="">
+        <div class="input-group">
+            <input id="keyword" type="text" class="form-control" name="keyword" placeholder="Search learner" />
+            <button id="btnSearch" class="btn btn-primary" type="button">
+                <i class="fas fa-search"></i>
+                Search
+            </button>
+        </div>
+    </form>
+    @* *@
+    <div id="content">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Mã</th>
+                    <th>Tên</th>
+                    <th>Họ</th>
+                    <th>Ngành</th>
+                    <th>Ngày Nhập Học</th>
+                    <th>Chức năng</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var s in Model)
+                {
+                    <tr>
+                        <td>@s.LearnerID</td>
+                        <td>@s.FirstMidName</td>
+                        <td>@s.LastName</td>
+                        <td>@s.Major.MajorName</td>
+                        <td>@s.EnrollmentDate</td>
+                        <td><a asp-action="Edit" asp-area="Admin" asp-route-id="@s.LearnerID">Edit</a>|
+                            <a asp-action="Delete" asp-area="Admin" asp-route-id="@s.LearnerID">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @* Nav phan trang *@
+        <ul class="pagination">
+            @for (int i = 1; i <= ViewBag.pageNum; i++)
+            {
+                <li class="page-item @(ViewBag.pageIndexCurrent == i ? "active" : "")" page="@i" @(ViewBag.MajorID != null ?
+                "mid='@ViewBag.MajorID'" : "") @(ViewBag.keyword != null ? "keyword='@Viewbag.keyword'" : "")>
+                    <a class="page-link">@i</a>
+                </li>
+            }
+        </ul>
+    </div>
+    <a asp-action="Create" asp-area="Admin" class="btn btn-primary">Create New Student</a>
+</div>
+
+@section Scripts {
+    <script>
+        @* Ajax search *@
+            $("body").on("click", "li.page-item", function (e) {
+                var page = $(this).attr("page");
+                var mid = $(this).attr("mid");
+                var keyword = $(this).attr("keyword");
+                var data = {
+                    id: mid,
+                    keyword: keyword,
+                    pageIndex: page
+                };
+        @* alert(`pageIndex: ${page}, id: ${mid}, keyword: ${keyword}`); *@
+                    $.ajax({
+                        url: "Admin/Learner/LearnerFilter",
+                        type: "GET",
+                        data: data,
+                        success: function (data) {
+                            $("div#content").html(data);
+                        }
+                    });
+            });
+
+        $("li.nav-item").click(function (e) {
+            var id = $(this).attr("id");
+            var data = { id: id };
+        @* alert(`id: ${id}`); *@
+                $.ajax({
+                    url: "Admin/Learner/LearnerFilter",
+                    type: "GET",
+                    data: data,
+                    success: function (data) {
+                        $("div#content").html(data);
+                    }
+                });
+        });
+
+        $("button#btnSearch").click(function () {
+            var keyword = $("#keyword").val();
+            var data = { keyword: keyword };
+        @* alert(`keyword: ${keyword}`); *@
+            helpSearchAjaxRequest(data); 
+        });
+
+        const helpSearchAjaxRequest = (data) => {
+            $.ajax({
+                    url: "Admin/Learner/LearnerFilter",
+                    type: "GET",
+                    data: data,
+                    success: function (data) {
+                        $("div#content").html(data);
+                    }
+                });
+        }
+
+        @* Listen key search *@
+        $(document).ready(function () {
+            $("#keyword").on("keyup", function (e) {
+                var keyword = $("#keyword").val();
+                var data = { keyword: keyword }; 
+                helpSearchAjaxRequest(data);
+            });
+        });
+    </script>
+}

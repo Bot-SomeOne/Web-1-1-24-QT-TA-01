@@ -16,39 +16,10 @@ class Route
          * Namespace default
          * Controller: Home
          */
-        // app.MapControllerRoute(
-        //     name: "default",
-        //     pattern: "{controller=Home}/{action=Index}/{id?}",
-        //     defaults: new { controller = "Home", action = "Index" }
-        // );
-
-        /**
-         * Add a route
-         * Namespace default
-         * Controller: Student
-         */
         app.MapControllerRoute(
-            name: "student",
-            pattern: "{controller=Student}/{action=Index}/{id?}",
-            defaults: new { controller = "Student", action = "Index" }
-        );
-
-        /**
-         * Add a route for student/index to admin/student/list
-         */
-        app.MapControllerRoute(
-            name: "studentIndex",
-            pattern: "admin/student/list/{id?}",
-            defaults: new { controller = "Student", action = "Index" }
-        );
-
-        /**
-         * Add a route for student/create to admin/student/add
-         */
-        app.MapControllerRoute(
-            name: "studentCreate",
-            pattern: "admin/student/add/{id?}",
-            defaults: new { controller = "Student", action = "Create" }
+            name: "default",
+            pattern: "{controller=Home}/{action=Index}/{id?}",
+            defaults: new { controller = "Home", action = "Index" }
         );
 
         /**
@@ -70,21 +41,13 @@ class Route
         );
 
         /**
-         * Add a route for Test 
+         * Add a route for Areas
          */
-        app.MapControllerRoute(
-            name: "Test",
-            pattern: "{controller=Test}/{action=Index}/{id?}",
-            defaults: new { controller = "Test", action = "Index" }
-        );
-
-        /**
-         * Add a route for Learner
-         */
-        app.MapControllerRoute(
-            name: "Learner",
-            pattern: "admin/learner/list/{id?}",
-            defaults: new { controller = "Learner", action = "Index" }
+        app.MapAreaControllerRoute(
+            name: "areas",
+            areaName: "Admin",
+            pattern: "Admin/{controller=Home}/{action=Index}/{id?}",
+            defaults: new { areas="Admin", controller = "Home", action = "Index" }
         );
 
         app.Run();
