@@ -63,7 +63,7 @@ public class ImageService : IBufferedFileUploadService
     {
         if (file == null || file.Length == 0)
         {
-            return null; // hoặc ném ra một ngoại lệ tùy theo yêu cầu của bạn
+            throw new ArgumentException("File is null or empty", nameof(file));
         }
 
         using (var memoryStream = new MemoryStream())
