@@ -85,7 +85,7 @@ public class DbInitializer
             {
                 var students = new Student[] {
                     new Student() {
-                        Id = 1,
+                        // Id = 1,
                         Name = "Ly Tran Vinh",
                         Branch = Branch.IT,
                         Gender = Gender.Male,
@@ -93,57 +93,68 @@ public class DbInitializer
                         Address = "Ha Noi",
                         Email = "lytranvinh.work@gmail.com",
                         Point = 9.8,
-                        DateOfBirth = new DateTime(2004, 9, 25)
+                        DateOfBirth = new DateTime(2004, 9, 25),
+                        Password = "S4^Zj)Q{GmgFIj~"
                     },
                     new Student() {
-                        Id = 101,
+                        // Id = 101,
                         Name = "Hai Nam",
                         Branch = Branch.IT,
                         Gender = Gender.Male,
                         IsRegular = true,
                         Address = "A1-2018",
                         Email = "nam@gmail.com",
-                        Point = 5.5
+                        Point = 5.5,
+                        Password = "YSh_j,SJ2=Sqr8F",
+                        DateOfBirth = new DateTime(1999, 5, 15)
                     },
                     new Student() {
-                        Id = 102,
+                        // Id = 102,
                         Name = "Minh Tu",
                         Branch = Branch.BE,
                         Gender = Gender.Female,
                         IsRegular = true,
                         Address = "A1-2019",
                         Email = "tu@gmail.com",
-                        Point = 7.5
+                        Point = 7.5,
+                        Password = "QW*d=sZf$~J6K",
+                        DateOfBirth = new DateTime(2002, 9, 1)
                     },
                     new Student() {
-                        Id = 103,
+                        // Id = 103,
                         Name = "Hoang Phong",
                         Branch = Branch.CE,
                         Gender = Gender.Male,
                         IsRegular = false,
                         Address = "A1-2020",
                         Email = "phong@gmail.com",
-                        Point = 4
+                        Point = 4,
+                        Password = "PZ%g=R8F$~J6K",
+                        DateOfBirth = new DateTime(1998, 11, 20)
                     },
                     new Student() {
-                        Id = 104,
+                        // Id = 104,
                         Name = "Xuan Mai",
                         Branch = Branch.EE,
                         Gender = Gender.Female,
                         IsRegular = false,
                         Address = "A1-2021",
                         Email = "mai@gmail.com",
-                        Point = 8.5
+                        Point = 8.5,
+                        Password = "S4^Zj)Q{GmgFIj~",
+                        DateOfBirth = new DateTime(2004, 9, 15)
                     },
                     new Student() {
-                        Id = 105,
+                        // Id = 105,
                         Name = "Hai Yen",
                         Branch = Branch.IT,
                         Gender = Gender.Female,
                         IsRegular = true,
                         Address = "A1-2022",
                         Email = "yenh@gmail.com",
-                        Point = 6.5
+                        Point = 6.5,
+                        Password = "YSh_j,SJ2=Sqr8F",
+                        DateOfBirth = new DateTime(2000, 5, 15)
                     }
                 };
 
