@@ -80,6 +80,80 @@ public class DbInitializer
                 context.SaveChanges();
             }
 
+            // Check students
+            if (!context.Students.Any())
+            {
+                var students = new Student[] {
+                    new Student() {
+                        Id = 1,
+                        Name = "Ly Tran Vinh",
+                        Branch = Branch.IT,
+                        Gender = Gender.Male,
+                        IsRegular = true,
+                        Address = "Ha Noi",
+                        Email = "lytranvinh.work@gmail.com",
+                        Point = 9.8,
+                        DateOfBirth = new DateTime(2004, 9, 25)
+                    },
+                    new Student() {
+                        Id = 101,
+                        Name = "Hai Nam",
+                        Branch = Branch.IT,
+                        Gender = Gender.Male,
+                        IsRegular = true,
+                        Address = "A1-2018",
+                        Email = "nam@gmail.com",
+                        Point = 5.5
+                    },
+                    new Student() {
+                        Id = 102,
+                        Name = "Minh Tu",
+                        Branch = Branch.BE,
+                        Gender = Gender.Female,
+                        IsRegular = true,
+                        Address = "A1-2019",
+                        Email = "tu@gmail.com",
+                        Point = 7.5
+                    },
+                    new Student() {
+                        Id = 103,
+                        Name = "Hoang Phong",
+                        Branch = Branch.CE,
+                        Gender = Gender.Male,
+                        IsRegular = false,
+                        Address = "A1-2020",
+                        Email = "phong@gmail.com",
+                        Point = 4
+                    },
+                    new Student() {
+                        Id = 104,
+                        Name = "Xuan Mai",
+                        Branch = Branch.EE,
+                        Gender = Gender.Female,
+                        IsRegular = false,
+                        Address = "A1-2021",
+                        Email = "mai@gmail.com",
+                        Point = 8.5
+                    },
+                    new Student() {
+                        Id = 105,
+                        Name = "Hai Yen",
+                        Branch = Branch.IT,
+                        Gender = Gender.Female,
+                        IsRegular = true,
+                        Address = "A1-2022",
+                        Email = "yenh@gmail.com",
+                        Point = 6.5
+                    }
+                };
+
+                foreach (Student s in students)
+                {
+                    context.Students.Add(s);
+                }
+                context.SaveChanges();
+            }
+            
         }
     }
 }
