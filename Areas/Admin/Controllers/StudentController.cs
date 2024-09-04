@@ -1,73 +1,26 @@
 
-using lab1.models;
-using lab1.models.viewmodels;
-using lab1.services;
+
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+//
+using lab1.models;
+using lab1.models.viewmodels;
+using lab1.services;
+using lab1.data;
 
 namespace lab1.areas.admin.controllers;
 
 [Area("Admin")]
 public class StudentController : Controller
 {
-    // Variables
-    private static List<Student> listStudent = new List<Student>(){
-        new Student() {
-                Id = 101,
-                Name = "Hai Nam",
-                Branch = Branch.IT,
-                Gender = Gender.Male,
-                IsRegular = true,
-                Address = "A1-2018",
-                Email = "nam@gmail.com",
-                Point = 5.5
-            },
-        new Student() {
-            Id = 102,
-            Name = "Minh Tu",
-            Branch = Branch.BE,
-            Gender = Gender.Female,
-            IsRegular = true,
-            Address = "A1-2019",
-            Email = "tu@gmail.com",
-            Point = 7.5
-        },
-        new Student() {
-            Id = 103,
-            Name = "Hoang Phong",
-            Branch = Branch.CE,
-            Gender = Gender.Male,
-            IsRegular = false,
-            Address = "A1-2020",
-            Email = "phong@gmail.com",
-            Point = 4
-        },
-        new Student() {
-            Id = 104,
-            Name = "Xuan Mai",
-            Branch = Branch.EE,
-            Gender = Gender.Female,
-            IsRegular = false,
-            Address = "A1-2021",
-            Email = "mai@gmail.com",
-            Point = 8.5
-        },
-        new Student() {
-            Id = 105,
-            Name = "Hai Yen",
-            Branch = Branch.IT,
-            Gender = Gender.Female,
-            IsRegular = true,
-            Address = "A1-2022",
-            Email = "yenh@gmail.com",
-            Point = 6.5
-        }
-    };
+    // Var
+    private SchoolContext _schoolContext;
 
     // Constructor
-    public StudentController()
+    public StudentController(SchoolContext context)
     {
+        _schoolContext = context;
     }
 
     // Actions
@@ -75,7 +28,7 @@ public class StudentController : Controller
     // GET: Student
     public IActionResult Index()
     {
-        return View(listStudent);
+        return View(_schoolContext.Students);
     }
 
     // GET: Create
@@ -100,9 +53,9 @@ public class StudentController : Controller
     {
         if (ModelState.IsValid)
         {
-            student.Id = listStudent.Max(s => s.Id) + 1;
-            listStudent.Add(student);
-            return View("Index", listStudent);
+            _schoolContext.Students.Add(student);
+            _schoolContext.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // Lấy Enum Genders tạo thành list và gán vào ViewBag => Tạo radio button
@@ -120,7 +73,13 @@ public class StudentController : Controller
     // GET: Details
     public IActionResult Details(int id)
     {
-        Student student = listStudent.FirstOrDefault(s => s.Id == id);
+        Student? student = _schoolContext.Students.FirstOrDefault(s => s.Id == id);
+
+        if (student == null)
+        {
+            return NotFound();
+        }
+
         return View(student);
     }
 
@@ -128,7 +87,13 @@ public class StudentController : Controller
     [HttpPost]
     public IActionResult Upgrade(StudentUpdateViewModel student)
     {
-        Student studentUpdate = listStudent.FirstOrDefault(s => s.Id == student.Id);
+        Student? studentUpdate = _schoolContext.Students.FirstOrDefault(s => s.Id == student.Id);
+        
+        if (studentUpdate == null)
+        {
+            return NotFound();
+        }
+        
         if (ModelState.IsValid)
         {
             studentUpdate.Name = student.Name;
@@ -139,8 +104,8 @@ public class StudentController : Controller
             studentUpdate.Email = student.Email;
             studentUpdate.Point = student.Point;
             studentUpdate.DateOfBirth = student.DateOfBirth;
-
-            return View("Index", listStudent);
+            _schoolContext.SaveChanges();
+            return RedirectToAction("Details", studentUpdate);
         } 
         return View("Details", studentUpdate);
     }
@@ -149,9 +114,16 @@ public class StudentController : Controller
     [HttpPost]
     public IActionResult Delete(int id)
     {
-        Student student = listStudent.FirstOrDefault(s => s.Id == id);
-        listStudent.Remove(student);
-        return View("Index", listStudent);
+        Student? student = _schoolContext.Students.FirstOrDefault(s => s.Id == id);
+
+        if (student == null)
+        {
+            return NotFound();
+        }
+
+        _schoolContext.Students.Remove(student);
+        _schoolContext.SaveChanges();
+        return RedirectToAction("Index");
     }
 
     // POST: Upload Avatar User
@@ -160,7 +132,12 @@ public class StudentController : Controller
     {
         const int maxFileSize = 1024 * 1024; // 2MB
 
-        Student student = listStudent.FirstOrDefault(s => s.Id == id);
+        Student? student = _schoolContext.Students.FirstOrDefault(s => s.Id == id);
+
+        if (student == null)
+        {
+            return NotFound();
+        }
 
         if (file == null)
         {
@@ -184,6 +161,7 @@ public class StudentController : Controller
                 student.Avatar = imageData;
                 ViewBag.MessageUpLoadAvatar = "File Upload Successful.";
                 ViewBag.StatusUpdateAvatar = true;
+                _schoolContext.SaveChanges();
             }
             else
             {
