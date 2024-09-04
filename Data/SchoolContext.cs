@@ -9,6 +9,7 @@ public class SchoolContext : DbContext
     public virtual DbSet<Learner> Learners { get; set; }
     public virtual DbSet<Enrollment> Enrollments { get; set; }
     public virtual DbSet<Major> Majors { get; set; }
+    public virtual DbSet<Student> Students { get; set; }
     
     // Constructor
     public SchoolContext(DbContextOptions<SchoolContext> options) : base(options) { }
@@ -20,5 +21,6 @@ public class SchoolContext : DbContext
         modelBuilder.Entity<Learner>().ToTable(nameof(Learner));
         modelBuilder.Entity<Enrollment>().ToTable(nameof(Enrollment));
         modelBuilder.Entity<Major>().ToTable(nameof(Major));
+        modelBuilder.Entity<Student>().ToTable(nameof(Student));
     }
 }
