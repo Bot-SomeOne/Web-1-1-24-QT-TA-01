@@ -134,7 +134,7 @@
                             <div class="col-md-6">
                                 <label class="small mb-1" asp-for="DateOfBirth">Birthday</label>
                                 <input asp-for="DateOfBirth" class="form-control" 
-                                    placeholder="Enter your birthday" value="@Model.DateOfBirth">
+                                    placeholder="Enter your birthday" value="@(Model.DateOfBirth.HasValue ? Model.DateOfBirth.Value.ToString("yyyy-MM-dd") : "")">
                                 <span asp-validation-for="DateOfBirth" class="text-danger"></span>
                             </div>
                             <!-- Form Group (point)-->
