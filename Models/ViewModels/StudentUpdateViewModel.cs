@@ -30,5 +30,6 @@ public class StudentUpdateViewModel
     public double? Point { get; set; }
 
     [DataType(DataType.Date)]
+    [Required(ErrorMessage = "Ngày sinh không được để trống")]
     public DateTime? DateOfBirth { get; set; }
 }
