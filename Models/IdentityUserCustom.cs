@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace lab1.models;
 
-public class IndentityUserCustom : IdentityUser
+public class IdentityUserCustom : IdentityUser
 {
 
     public string? FirstName { get; set; }
