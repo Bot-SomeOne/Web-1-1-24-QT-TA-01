@@ -4,7 +4,6 @@
     ViewData["Title"] = "Students";
 }
 
-<a asp-action="Create" class="btn btn-primary">Create Student</a>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -25,7 +24,7 @@
             <tr>
                 <td>@s.Id</td>
                 <td>
-                    <a asp-action="Details" asp-controller="Student" asp-route-id="@s.Id">@s.Name</a>
+                    @s.Name
                 </td>
                 <td>@s.DateOfBirth</td>
                 @{
