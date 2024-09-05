@@ -1,9 +1,13 @@
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
 // 
 using lab1.services;
 using lab1.interfaces;
 using lab1.data;
+using lab1.models;
 
 namespace lab1;
 
@@ -46,6 +50,11 @@ class Program
         builder.Services.AddDbContext<SchoolContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
         
+        builder.Services.AddIdentity<IdentityUserCustom, IdentityRole>()
+            .AddEntityFrameworkStores<IdentityContext>()
+            .AddDefaultUI()
+            .AddDefaultTokenProviders();
+
     }
 
     private static void BuildInitialize(WebApplication app) {
