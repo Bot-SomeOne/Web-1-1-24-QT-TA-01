@@ -32,15 +32,16 @@
         <div style="margin-top:7px" class="form-group row">
             <label asp-for="Branch" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
-                <select asp-for="Branch" class="custom-select mr-sm-2" asp-items="Html.GetEnumSelectList<Branch>()"></select>
+                <select asp-for="Branch" class="custom-select mr-sm-2"
+                    asp-items="Html.GetEnumSelectList<Branch>()"></select>
             </div>
             <span asp-validation-for="Branch" class="text-danger"></span>
         </div>
         <div style="margin-top:7px" class="form-group row">
-            <label class="small mb-1" asp-for="IsRegular">IsRegular</label>
-            <div class="col-sm-10 custom-control custom-checkbox">
-                <input class="custom-control-input mr-sm-2" type="checkbox" asp-for="IsRegular">
-                <label class="custom-control-label" asp-for="IsRegular"></label>
+            <label class="col-sm-2 col-form-label" asp-for="IsRegular">IsRegular</label>
+            <div class="form-check col-sm-10">
+                <input class="form-check-input mr-sm-2" type="checkbox" asp-for="IsRegular">
+                <label class="form-check-label" asp-for="IsRegular"></label>
             </div>
             <span asp-validation-for="IsRegular" class="text-danger"></span>
         </div>
@@ -90,6 +91,3 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
-
-
-
