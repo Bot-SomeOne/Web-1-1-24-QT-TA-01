@@ -37,7 +37,8 @@ class Program
         app.Run();
     }
 
-    private static void BuildServices(WebApplicationBuilder builder) {
+    private static void BuildServices(WebApplicationBuilder builder)
+    {
         // Add services to the container.
         builder.Services.AddControllersWithViews();
         builder.Services.AddTransient<IBufferedFileUploadService, BufferedFileUploadLocalService>();
@@ -45,11 +46,17 @@ class Program
         builder.Services.AddTransient<IStreamFileUploadService, StreamFileUploadLocalService>();
     }
 
-    private static void BuildDataBase(WebApplicationBuilder builder) {
+    private static void BuildDataBase(WebApplicationBuilder builder)
+    {
         // TODO: Add services to the container
         builder.Services.AddDbContext<SchoolContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-        
+
+        // Register the IdentityContext
+        builder.Services.AddDbContext<IdentityContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+        // Register Identity services
         builder.Services.AddIdentity<IdentityUserCustom, IdentityRole>()
             .AddEntityFrameworkStores<IdentityContext>()
             .AddDefaultUI()
@@ -57,7 +64,8 @@ class Program
 
     }
 
-    private static void BuildInitialize(WebApplication app) {
+    private static void BuildInitialize(WebApplication app)
+    {
         // Initialize the database
         using (var serviceScope = app.Services.CreateScope())
         {
