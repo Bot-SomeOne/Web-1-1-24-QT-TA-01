@@ -1,72 +1,24 @@
 
-using lab1.models;
-using lab1.models.viewmodels;
-using lab1.services;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+//
+using lab1.models;
+using lab1.models.viewmodels;
+using lab1.services;
+using lab1.data;
 
 namespace lab1.controllers;
 
 public class StudentController : Controller
 {
     // Variables
-    private static List<Student> listStudent = new List<Student>(){
-        new Student() {
-                Id = 101,
-                Name = "Hai Nam",
-                Branch = Branch.IT,
-                Gender = Gender.Male,
-                IsRegular = true,
-                Address = "A1-2018",
-                Email = "nam@gmail.com",
-                Point = 5.5
-            },
-        new Student() {
-            Id = 102,
-            Name = "Minh Tu",
-            Branch = Branch.BE,
-            Gender = Gender.Female,
-            IsRegular = true,
-            Address = "A1-2019",
-            Email = "tu@gmail.com",
-            Point = 7.5
-        },
-        new Student() {
-            Id = 103,
-            Name = "Hoang Phong",
-            Branch = Branch.CE,
-            Gender = Gender.Male,
-            IsRegular = false,
-            Address = "A1-2020",
-            Email = "phong@gmail.com",
-            Point = 4
-        },
-        new Student() {
-            Id = 104,
-            Name = "Xuan Mai",
-            Branch = Branch.EE,
-            Gender = Gender.Female,
-            IsRegular = false,
-            Address = "A1-2021",
-            Email = "mai@gmail.com",
-            Point = 8.5
-        },
-        new Student() {
-            Id = 105,
-            Name = "Hai Yen",
-            Branch = Branch.IT,
-            Gender = Gender.Female,
-            IsRegular = true,
-            Address = "A1-2022",
-            Email = "yenh@gmail.com",
-            Point = 6.5
-        }
-    };
-
+    private SchoolContext _schoolContext;
+    
     // Constructor
-    public StudentController()
+    public StudentController(SchoolContext context) 
     {
+        _schoolContext = context;
     }
 
     // Actions
@@ -74,6 +26,7 @@ public class StudentController : Controller
     // GET: Student
     public IActionResult Index()
     {
+        List<Student> listStudent = _schoolContext.Students.ToList();
         return View(listStudent);
     }
 
