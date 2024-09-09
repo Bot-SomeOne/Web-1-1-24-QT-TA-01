@@ -164,7 +164,46 @@ public class DbInitializer
                 }
                 context.SaveChanges();
             }
-            
+
+        }
+
+        using (var context = new ViewContext(serviceProvider.GetRequiredService<DbContextOptions<ViewContext>>()))
+        {
+            context.Database.EnsureCreated();
+            if (!context.NavLeftDashboardAdmin.Any())
+            {
+                var navItems = new List<NavItem>(){
+                    new NavItem() {
+                        Area = "",
+                        Controller = "Home",
+                        Action = "Index",
+                        Text = "Back To User Dashboard"
+                    },
+                    new NavItem() {
+                        Area = "Admin",
+                        Controller = "Home",
+                        Action = "Index",
+                        Text = "Dashboard Admin"
+                    },
+                    new NavItem() {
+                        Area = "Admin",
+                        Controller = "Student",
+                        Action = "Index",
+                        Text = "Students"
+                    },
+                    new NavItem() {
+                        Area = "Admin",
+                        Controller = "Learner",
+                        Action = "Index",
+                        Text = "Learners"
+                    },
+                };
+                foreach (var navItem in navItems)
+                {
+                    context.NavLeftDashboardAdmin.Add(navItem);
+                }
+                context.SaveChanges();
+            }
         }
     }
 }
