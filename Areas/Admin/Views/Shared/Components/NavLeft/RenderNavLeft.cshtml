@@ -1,0 +1,13 @@
+@model IEnumerable<lab1.models.NavItem>
+
+<div class="sb-sidenav-menu">
+    <div class="nav">
+        @foreach (var m in Model)
+        {
+           <a class="nav-link" asp-area="@m.Area" asp-controller="@m.Controller" asp-action="@m.Action">
+            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+            @m.Text
+        </a>
+        }
+    </div>
+</div>
