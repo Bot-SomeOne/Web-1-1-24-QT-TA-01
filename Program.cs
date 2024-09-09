@@ -52,6 +52,10 @@ class Program
         builder.Services.AddDbContext<SchoolContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+        // Register the ViewContext 
+        builder.Services.AddDbContext<ViewContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
         // Register the IdentityContext
         builder.Services.AddDbContext<IdentityContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -61,7 +65,6 @@ class Program
             .AddEntityFrameworkStores<IdentityContext>()
             .AddDefaultUI()
             .AddDefaultTokenProviders();
-
     }
 
     private static void BuildInitialize(WebApplication app)
