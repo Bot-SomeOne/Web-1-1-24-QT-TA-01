@@ -10,40 +10,16 @@ namespace lab1.areas.viewcomponents;
 public class NavLeft : ViewComponent
 {
     // Variables
-    // private SchoolContext db;
+    private ViewContext db;
     private List<NavItem> navItems;
 
     // Constructor
-    public NavLeft()
+    public NavLeft(ViewContext _context)
     {
-        // db = _context;
-        navItems = new List<NavItem>(){
-            new NavItem() {
-                Area = "",
-                Controller = "Home",
-                Action = "Index",
-                Text = "Back To User Dashboard"
-            },
-            new NavItem() {
-                Area = "Admin",
-                Controller = "Home",
-                Action = "Index",
-                Text = "Dashboard Admin"
-            },
-            new NavItem() {
-                Area = "Admin",
-                Controller = "Student",
-                Action = "Index",
-                Text = "Students"
-            },
-            new NavItem() {
-                Area = "Admin",
-                Controller = "Learner",
-                Action = "Index",
-                Text = "Learners"
-            },
-        };
+        db = _context;
+        navItems = db.NavLeftDashboardAdmin.ToList();
     }
+   
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
