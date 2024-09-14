@@ -9,9 +9,10 @@ public class StudentUpdateViewModel
     [StringLength(100, MinimumLength = 4, ErrorMessage = "Tên phải có ít nhất 4 ký tự")]
     public string? Name { get; set; }
 
+    [EmailAddress(ErrorMessage = "Vui lòng nhập địa chỉ email hợp lệ")]
     [Required(ErrorMessage = "Email không được để trống")]
     [RegularExpression(@"^[a-zA-Z0-9._%+-]+@gmail\.com$", ErrorMessage = "Email không hợp lệ - Phải có đuôi @gmail.com")]
-    [DataType(DataType.EmailAddress)]
+    [DataType(DataType.EmailAddress, ErrorMessage = "Email không hợp lệ")]
     public string? Email { get; set; }
 
     [Required(ErrorMessage = "Branch không được để trống")]
@@ -27,9 +28,10 @@ public class StudentUpdateViewModel
 
     [Range(0, 10, ErrorMessage = "Điểm phải nằm trong khoảng từ 0 đến 10")]
     [Required(ErrorMessage = "Điểm không được để trống")]
+    [RegularExpression(@"^[0-9]*$", ErrorMessage = "Điểm phải là số")]
     public double? Point { get; set; }
 
-    [DataType(DataType.Date)]
+    [DataType(DataType.Date, ErrorMessage = "Ngày sinh không hợp lệ")]
     [Required(ErrorMessage = "Ngày sinh không được để trống")]
     public DateTime? DateOfBirth { get; set; }
 }
