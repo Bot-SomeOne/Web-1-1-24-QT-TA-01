@@ -214,11 +214,13 @@ public class DbInitializer
                 {
                     new IdentityUserCustom() 
                     { 
+                        UserName = "admin", 
                         Email = "admin@gmail.com", 
                         PasswordHash = "Admin123", // TODO hash password
                     },
                     new IdentityUserCustom() 
                     { 
+                        UserName = "user1", 
                         Email = "user@gmail.com", 
                         PasswordHash = "User123", // TODO hash password
                     }
