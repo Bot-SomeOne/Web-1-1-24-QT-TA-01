@@ -205,5 +205,31 @@ public class DbInitializer
                 context.SaveChanges();
             }
         }
+
+        using (var context = new IdentityContext(serviceProvider.GetRequiredService<DbContextOptions<IdentityContext>>()))
+        {
+            if (!context.Users.Any())
+            {
+                List<IdentityUserCustom> listUser = new List<IdentityUserCustom>()
+                {
+                    new IdentityUserCustom() 
+                    { 
+                        Email = "admin@gmail.com", 
+                        PasswordHash = "Admin123", // TODO hash password
+                    },
+                    new IdentityUserCustom() 
+                    { 
+                        Email = "user@gmail.com", 
+                        PasswordHash = "User123", // TODO hash password
+                    }
+                };
+                
+                for (int i = 0; i < listUser.Count; i++)
+                {
+                    context.Users.Add(listUser[i]);
+                }
+                context.SaveChanges();
+            }
+        }
     }
 }
