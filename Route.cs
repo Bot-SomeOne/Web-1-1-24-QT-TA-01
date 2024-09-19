@@ -15,12 +15,21 @@ class Route
          * Add a route for Areas Admin
          */
         app.MapAreaControllerRoute(
-            name: "areas",
+            name: "area admin",
             areaName: "Admin",
             pattern: "Admin/{controller=Home}/{action=Index}/{id?}",
             defaults: new { areas = "Admin", controller = "Home", action = "Index" }
         );
 
+        /**
+         * Add a route for Areas Admin
+         */
+        app.MapAreaControllerRoute(
+            name: "area identity",
+            areaName: "Identity",
+            pattern: "Identity/{controller=Account}/{action=Index}/{id?}",
+            defaults: new { areas = "Identity", controller = "Account", action = "Index" }
+        );
 
         // Route don't work in areas controller
         /**
