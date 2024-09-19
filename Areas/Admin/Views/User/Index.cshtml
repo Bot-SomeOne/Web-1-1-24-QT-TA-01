@@ -1,0 +1,32 @@
+@using lab1.areas.identity.models;
+@model IEnumerable<IdentityUserCustom>
+@{
+    ViewData["Title"] = "Students";
+}
+
+@* <a asp-action="Create" asp-area="Admin" asp-controller="Student" class="btn btn-primary">Create Student</a> *@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>User Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Address</th>            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var m in Model)
+        {
+                <tr>
+                    <td>@m.UserName</td>
+                    <td>@m.Email</td>
+                    <td>@m.Phone</td>
+                    <td>@m.FirstName</td>
+                    <td>@m.LastName</td>
+                    <td>@m.Address</td>
+                </tr>
+        }
+    </tbody>
+</table>
