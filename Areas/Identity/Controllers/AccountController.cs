@@ -58,7 +58,9 @@ public class AccountController: Controller {
     [HttpPost]
     public IActionResult Login(LoginViewModel loginViewModel) { 
         if (ModelState.IsValid) {
-            var user = _context.Users.FirstOrDefault(u => u.UserName == loginViewModel.UserName && u.PasswordHash == loginViewModel.Password);
+            // var passwordHash = BCrypt.Net.BCrypt.HashPassword(loginViewModel.Password);
+            var passwordHash = loginViewModel.Password; // TODO - remove it
+            var user = _context.Users.FirstOrDefault(u => u.UserName == loginViewModel.UserName && u.PasswordHash == passwordHash);
             if (user != null) {
                 Console.WriteLine($"User {user.UserName} logged in");
             }
