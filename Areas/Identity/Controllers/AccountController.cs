@@ -21,6 +21,23 @@ public class AccountController : Controller
         _context = identityContext;
         _jwtHelper = jwtHelper;
     }
+    /**
+     * TODO rm
+     * Get Index
+     */
+    public IActionResult Index()
+    {
+        // Retrieve the cookie named 'jwtToken'
+        var jwtToken = Request.Cookies["jwtToken"];
+
+        if (string.IsNullOrEmpty(jwtToken))
+        {
+           return RedirectToAction("Login");
+        }
+        // TODO code
+
+        return View();
+    }
 
     /**
      * Get Register
@@ -86,4 +103,14 @@ public class AccountController : Controller
         return View();
     }
 
+    /**
+     * Post Logout
+     */
+    [HttpPost]
+    public IActionResult Logout()
+    {
+        // Clear the JWT token cookie on logout
+        Response.Cookies.Delete("jwtToken");
+        return RedirectToAction("Login");
+    }
 }
