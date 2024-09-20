@@ -10,21 +10,12 @@ namespace lab1.areas.identity.controllers;
 
 [Area("Identity")]
 public class AccountController: Controller {
-    // Var
     //Var
     private IdentityContext _context;
     // Constructor
     public AccountController(IdentityContext identityContext)
     {
         _context = identityContext;
-    }
-
-    /**
-     * Get Login
-     */
-    [HttpGet]
-    public IActionResult Login() {
-        return View();
     }
 
     /**
@@ -48,23 +39,33 @@ public class AccountController: Controller {
             
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login");
         }
         return View("Register");
     }
 
     /**
+     * Get Login
+     */
+    [HttpGet]
+    public IActionResult Login() {
+        return View();
+    }
+
+    /**
      * Post Login
      */
-
-
-    /**
-     * Post Logout
-     */
-
-
-    /**
-     * Get Manage
-     */
+    [HttpPost]
+    public IActionResult Login(LoginViewModel loginViewModel) { 
+        if (ModelState.IsValid) {
+            var user = _context.Users.FirstOrDefault(u => u.UserName == loginViewModel.UserName && u.PasswordHash == loginViewModel.Password);
+            if (user != null) {
+                Console.WriteLine($"User {user.UserName} logged in");
+            }
+            ViewBag.Error = "Invalid username or password";
+            return View();
+        }
+        return View();
+    }
 
 }   
