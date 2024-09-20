@@ -3,6 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 // 
 using lab1.services;
 using lab1.interfaces;
@@ -17,6 +20,7 @@ class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        BuildAuthentication(builder);
         BuildServices(builder);
         BuildDataBase(builder);
 
@@ -35,6 +39,32 @@ class Program
         Route.RouteConfig(app);
 
         app.Run();
+    }
+
+    private static void BuildAuthentication(WebApplicationBuilder builder)
+    {
+        var jwtSettings = builder.Configuration.GetSection("Jwt");
+        var key = Encoding.ASCII.GetBytes(jwtSettings["Key"]);
+
+        builder.Services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = jwtSettings["Issuer"],
+                ValidAudience = jwtSettings["Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey(key)
+            };
+        });
+
     }
 
     private static void BuildServices(WebApplicationBuilder builder)
