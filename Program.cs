@@ -11,6 +11,7 @@ using lab1.services;
 using lab1.interfaces;
 using lab1.data;
 using lab1.models;
+using lab1.helpers;
 
 namespace lab1;
 
@@ -74,6 +75,9 @@ class Program
         builder.Services.AddTransient<IBufferedFileUploadService, BufferedFileUploadLocalService>();
         builder.Services.AddTransient<IBufferedFileUploadService, ImageService>();
         builder.Services.AddTransient<IStreamFileUploadService, StreamFileUploadLocalService>();
+
+        // Add service helpper 
+        builder.Services.AddScoped<JwtHelper>();
     }
 
     private static void BuildDataBase(WebApplicationBuilder builder)
