@@ -17,10 +17,32 @@ public class SchoolContext : DbContext
     // Override
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        // Create the context instance for the model builder
         modelBuilder.Entity<Course>().ToTable(nameof(Course));
         modelBuilder.Entity<Learner>().ToTable(nameof(Learner));
         modelBuilder.Entity<Enrollment>().ToTable(nameof(Enrollment));
         modelBuilder.Entity<Major>().ToTable(nameof(Major));
         modelBuilder.Entity<Student>().ToTable(nameof(Student));
+
+        // Auto generated primary key
+        modelBuilder.Entity<Course>()
+            .Property(e => e.CourseID)
+            .ValueGeneratedOnAdd(); 
+
+        modelBuilder.Entity<Learner>()
+            .Property(e => e.LearnerID)
+            .ValueGeneratedOnAdd();
+
+        modelBuilder.Entity<Enrollment>()
+            .Property(e => e.EnrollmentID)
+            .ValueGeneratedOnAdd();
+
+        modelBuilder.Entity<Major>()
+            .Property(e => e.MajorID)
+            .ValueGeneratedOnAdd();
+
+        modelBuilder.Entity<Student>()
+            .Property(e => e.Id)
+            .ValueGeneratedOnAdd();
     }
 }
