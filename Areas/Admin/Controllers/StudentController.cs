@@ -105,7 +105,7 @@ public class StudentController : Controller
             studentUpdate.Point = student.Point;
             studentUpdate.DateOfBirth = student.DateOfBirth;
             _schoolContext.SaveChanges();
-            return RedirectToAction("Details", studentUpdate);
+            return RedirectToAction("Index");
         } 
         return View("Details", studentUpdate);
     }
