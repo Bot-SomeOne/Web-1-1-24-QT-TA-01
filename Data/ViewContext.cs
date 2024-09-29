@@ -14,5 +14,11 @@ public class ViewContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<NavItem>().ToTable(nameof(NavItem));
+        // Auto Generated Primary Key
+        modelBuilder.Entity<NavItem>().HasKey(c => c.ID);
+        // Auto Increment Primary Key
+        modelBuilder.Entity<NavItem>()
+            .Property(c => c.ID)
+            .ValueGeneratedOnAdd();
     }
 }

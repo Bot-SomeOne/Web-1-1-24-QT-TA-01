@@ -32,11 +32,20 @@ public class DbInitializer
             // Check learners
             if (!context.Learners.Any())
             {
-                var learners = new Learner[]
-                                {
-                new Learner { FirstMidName = "Carson", LastName = "Alexander", EnrollmentDate = DateTime.Parse("2005-09-01"), MajorID = 1 },
-                new Learner { FirstMidName = "Meredith", LastName = "Alonso", EnrollmentDate = DateTime.Parse("2002-09-01"), MajorID = 2 }
-                                };
+                var learners = new Learner[] {
+                    new Learner { 
+                        FirstMidName = "Carson", 
+                        LastName = "Alexander", 
+                        EnrollmentDate = DateTime.Parse("2005-09-01"), 
+                        MajorID = 1
+                    },
+                    new Learner { 
+                        FirstMidName = "Meredith", 
+                        LastName = "Alonso", 
+                        EnrollmentDate = DateTime.Parse("2002-09-01"), 
+                        MajorID = 2 
+                    }
+                };
 
                 foreach (Learner l in learners)
                 {
@@ -50,9 +59,9 @@ public class DbInitializer
             {
                 var courses = new Course[]
                 {
-                    new Course { CourseID = 1050, Title = "Chemistry", Credits = 3 },
-                    new Course { CourseID = 4022, Title = "Microeconomics", Credits = 3 },
-                    new Course { CourseID = 4041, Title = "Macroeconomics", Credits = 3 }
+                    new Course {Title = "Chemistry", Credits = 3 },
+                    new Course {Title = "Microeconomics", Credits = 3 },
+                    new Course {Title = "Macroeconomics", Credits = 3 }
                 };
 
                 foreach (Course c in courses)
@@ -67,10 +76,10 @@ public class DbInitializer
             {
                 var enrollments = new Enrollment[]
                 {
-                    new Enrollment { LearnerID = 1, CourseID = 1050, Grade = 5.5f },
-                    new Enrollment { LearnerID = 1, CourseID = 4022, Grade = 7.5f },
-                    new Enrollment { LearnerID = 2, CourseID = 1050, Grade = 3.5f },
-                    new Enrollment { LearnerID = 2, CourseID = 4041, Grade = 7f }
+                    new Enrollment { LearnerID = 1, CourseID = 1, Grade = 5.5f },
+                    new Enrollment { LearnerID = 1, CourseID = 2, Grade = 7.5f },
+                    new Enrollment { LearnerID = 2, CourseID = 1, Grade = 3.5f },
+                    new Enrollment { LearnerID = 2, CourseID = 2, Grade = 7f }
                 };
 
                 foreach (Enrollment e in enrollments)
@@ -201,34 +210,6 @@ public class DbInitializer
                 foreach (var navItem in navItems)
                 {
                     context.NavLeftDashboardAdmin.Add(navItem);
-                }
-                context.SaveChanges();
-            }
-        }
-
-        using (var context = new IdentityContext(serviceProvider.GetRequiredService<DbContextOptions<IdentityContext>>()))
-        {
-            if (!context.Users.Any())
-            {
-                List<IdentityUserCustom> listUser = new List<IdentityUserCustom>()
-                {
-                    new IdentityUserCustom() 
-                    { 
-                        UserName = "admin", 
-                        Email = "admin@gmail.com", 
-                        PasswordHash = "Admin123", // TODO hash password
-                    },
-                    new IdentityUserCustom() 
-                    { 
-                        UserName = "user1", 
-                        Email = "user@gmail.com", 
-                        PasswordHash = "User123", // TODO hash password
-                    }
-                };
-                
-                for (int i = 0; i < listUser.Count; i++)
-                {
-                    context.Users.Add(listUser[i]);
                 }
                 context.SaveChanges();
             }
