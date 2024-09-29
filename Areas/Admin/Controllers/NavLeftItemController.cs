@@ -52,7 +52,7 @@ public class NavLeftItemController : Controller
         if (!ModelState.IsValid) {
             return View();
         }
-        navItem.ID = _context.NavLeftDashboardAdmin.Max(c => c.ID) + 1;  
+        // navItem.ID = _context.NavLeftDashboardAdmin.Max(c => c.ID) + 1;  
         _context.NavLeftDashboardAdmin.Add(navItem);
         _context.SaveChanges();
 

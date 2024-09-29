@@ -1,0 +1,46 @@
+@using lab1.models
+@model NavItem
+
+@{
+    ViewBag.Title = "Detail";
+}
+
+<div class="container-xl px-4 mt-4">
+    <hr class="mt-0 mb-4">
+    <div class="row">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <form asp-action="Detail"  asp-area="Admin" asp-controller="NavLeftItem">                        
+                        <div class="mb-3">
+                            <label class="small mb-1" asp-for="Area">Area</label>
+                            <input asp-for="Area" class="form-control" 
+                                placeholder="Enter your Area" value="@Model.Area">
+                            <span asp-validation-for="Area" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1" asp-for="Controller">Controller</label>
+                            <input asp-for="Controller" class="form-control" 
+                                placeholder="Enter your Controller" value="@Model.Controller">
+                            <span asp-validation-for="Controller" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1" asp-for="Action">Action</label>
+                            <input asp-for="Action" class="form-control" 
+                                placeholder="Enter your Action" value="@Model.Action">
+                            <span asp-validation-for="Action" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1" asp-for="Text">Text</label>
+                            <input asp-for="Text" class="form-control" 
+                                placeholder="Enter your Text" value="@Model.Text">
+                            <span asp-validation-for="Text" class="text-danger"></span>
+                        </div>
+                        <!-- Save changes button-->
+                        <input hidden class="hidden" asp-for="ID" value="@Model.ID">
+                        <button class="btn btn-primary" type="submit">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
