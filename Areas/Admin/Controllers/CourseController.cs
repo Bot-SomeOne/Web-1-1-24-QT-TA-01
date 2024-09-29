@@ -52,7 +52,6 @@ public class CourseController : Controller
         if (!ModelState.IsValid) {
             return View();
         }
-        course.CourseID = _schoolContext.Courses.Max(c => c.CourseID) + 1;  
         _schoolContext.Courses.Add(course);
         _schoolContext.SaveChanges();
 
@@ -63,7 +62,7 @@ public class CourseController : Controller
      * Method: Get
      * Description: Get details of Course
      */
-    public IActionResult Detail(int Id) {
+    public IActionResult Details(int Id) {
         var course = _schoolContext.Courses.FirstOrDefault(c => c.CourseID == Id);
 
         return View(course);
@@ -74,9 +73,9 @@ public class CourseController : Controller
      * Description: Edit Course Details with id
      */
     [HttpPost]
-    public IActionResult Detail(Course course) {
+    public IActionResult Details(Course course) {
         if (!ModelState.IsValid) {
-            return View("Detail", course.CourseID);
+            return View("Details", course);
         }
         
         var _course = _schoolContext.Courses.FirstOrDefault(c => c.CourseID == course.CourseID);
@@ -86,7 +85,7 @@ public class CourseController : Controller
 
         _schoolContext.SaveChanges();
 
-        return View("Index");
+        return RedirectToAction("Index");
     }
     
     /**

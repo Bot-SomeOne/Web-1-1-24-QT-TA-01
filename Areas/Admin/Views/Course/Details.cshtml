@@ -1,0 +1,34 @@
+@using lab1.models
+@model Course
+
+@{
+    ViewBag.Title = "Detail";
+}
+
+<div class="container-xl px-4 mt-4">
+    <hr class="mt-0 mb-4">
+    <div class="row">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <form asp-action="Details"  asp-area="Admin" asp-controller="Course">                        
+                        <div class="mb-3">
+                            <label class="small mb-1" asp-for="Title">Title</label>
+                            <input asp-for="Title" class="form-control" 
+                                placeholder="Enter your Title" value="@Model.Title">
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1" asp-for="Credits">Credits</label>
+                            <input asp-for="Credits" class="form-control" 
+                                placeholder="Enter your Credits" value="@Model.Credits">
+                            <span asp-validation-for="Credits" class="text-danger"></span>
+                        </div>
+                        <!-- Save changes button-->
+                        <input hidden class="hidden" asp-for="CourseID" value="@Model.CourseID">
+                        <button class="btn btn-primary" type="submit">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
