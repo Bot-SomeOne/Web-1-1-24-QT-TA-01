@@ -206,6 +206,30 @@ public class DbInitializer
                         Action = "Index",
                         Text = "Learners"
                     },
+                    new NavItem() {
+                        Area = "Admin",
+                        Controller = "Course",
+                        Action = "Index",
+                        Text = "Courses"
+                    },
+                    new NavItem() {
+                        Area = "Admin",
+                        Controller = "Major",
+                        Action = "Index",
+                        Text = "Majors"
+                    },
+                    new NavItem() {
+                        Area = "Admin",
+                        Controller = "Enrollment",
+                        Action = "Index",
+                        Text = "Enrollments"
+                    },
+                    new NavItem() {
+                        Area = "Admin",
+                        Controller = "NavLeftItem",
+                        Action = "Index",
+                        Text = "List Nav In DashBoard"
+                    },
                 };
                 foreach (var navItem in navItems)
                 {
