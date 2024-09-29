@@ -63,7 +63,7 @@ public class NavLeftItemController : Controller
      * Method: Get
      * Description: Get details of NavLeftDashboardAdmin
      */
-    public IActionResult Detail(int Id) {
+    public IActionResult Details(int Id) {
         var course = _context.NavLeftDashboardAdmin.FirstOrDefault(
             c => c.ID == Id
         );
@@ -76,7 +76,7 @@ public class NavLeftItemController : Controller
      * Description: Edit NavLeftDashboardAdmin Details with id
      */
     [HttpPost]
-    public IActionResult Detail(NavItem navItem) {
+    public IActionResult Details(NavItem navItem) {
         if (!ModelState.IsValid) {
             return View("Detail", navItem.ID);
         }
@@ -90,7 +90,9 @@ public class NavLeftItemController : Controller
         _nav.Action = navItem.Action;
         _nav.Text = navItem.Text;
 
-        return View("Index");
+        _context.SaveChanges();
+
+        return RedirectToAction("Index");
     }
     
     /**
@@ -104,6 +106,7 @@ public class NavLeftItemController : Controller
         );
         _context.NavLeftDashboardAdmin.Remove(nav);
         _context.SaveChanges();
+        
         return RedirectToAction("Index");
     }
 }

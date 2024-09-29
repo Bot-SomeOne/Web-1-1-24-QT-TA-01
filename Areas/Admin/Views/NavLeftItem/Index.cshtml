@@ -20,7 +20,7 @@
         {
                 <tr>
                     <td>
-                        <a asp-action="Details" asp-area="Admin" asp-controller="Student" asp-route-id="@s.ID">@s.ID</a>
+                        <a asp-action="Details" asp-area="Admin" asp-controller="NavLeftItem" asp-route-id="@s.ID">@s.ID</a>
                     </td>
                     <td>@s.Area</td>
                     <td>@s.Controller</td>
@@ -58,11 +58,11 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        Bạn Muốn Xoá Sinh Viên: @s.ID ?
+                                        Bạn Muốn Xoá Nav Item: @s.ID ?
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
-                                        <form asp-action="Delete" asp-area="Admin" asp-controller="Student" method="post">
+                                        <form asp-action="Delete" asp-area="Admin" asp-controller="NavLeftItem" method="post">
                                             <input type="hidden" name="id" value="@s.ID" />
                                             <button type="submit" class="btn btn-danger">Đồng Ý</button>
                                         </form>
