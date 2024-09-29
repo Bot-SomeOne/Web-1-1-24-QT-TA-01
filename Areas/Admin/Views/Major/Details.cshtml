@@ -1,0 +1,24 @@
+@using lab1.models
+@model Major
+
+<div class="container-xl px-4 mt-4">
+    <hr class="mt-0 mb-4">
+    <div class="row">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <form asp-action="Details"  asp-area="Admin" asp-controller="Major">                        
+                        <div class="mb-3">
+                            <label class="small mb-1" asp-for="MajorName">MajorName</label>
+                            <input asp-for="MajorName" class="form-control" 
+                                placeholder="Enter your MajorName" value="@Model.MajorName">
+                            <span asp-validation-for="MajorName" class="text-danger"></span>
+                        </div>
+                        <!-- Save changes button-->
+                        <input hidden class="hidden" asp-for="MajorID" value="@Model.MajorID">
+                        <button class="btn btn-primary" type="submit">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
