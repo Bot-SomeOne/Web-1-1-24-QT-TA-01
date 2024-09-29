@@ -1,0 +1,44 @@
+@using lab1.models
+@model Enrollment
+
+@{
+    ViewData["Title"] = "Create Enrollment";
+}
+
+<div>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <form asp-area="Admin" asp-controller="Enrollment" asp-action="Create" method="post" class="mt-3">
+        <div style="margin-top:7px" class="form-group row">
+            <label asp-for="CourseID" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <select asp-for="CourseID" class="form-control" asp-items="ViewBag.CourseID"></select>
+            </div>
+            <span asp-validation-for="CourseID" class="text-danger"></span>
+        </div>
+        <div style="margin-top:7px" class="form-group row">
+            <label asp-for="LearnerID" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <select asp-for="LearnerID" class="form-control" asp-items="ViewBag.LearnerID"></select>
+            </div>
+            <span asp-validation-for="LearnerID" class="text-danger"></span>
+        </div>
+        <div style="margin-top:7px" class="form-group row">
+            <label asp-for="Grade" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="Grade" class="form-control" placeholder="Input grade">
+            </div>
+            <span asp-validation-for="Grade" class="text-danger"></span>
+        </div>
+        <div style="margin-top:10px" class="form-group row">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
