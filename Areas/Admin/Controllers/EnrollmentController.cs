@@ -44,8 +44,30 @@ public class EnrollmentController : Controller
      * Description: Create new Enrollment
      */
     public IActionResult Create() {
-        ViewBag.CourseID = new SelectList(_schoolContext.Courses, "CourseID", "CourseID");
-        ViewBag.LearnerID = new SelectList(_schoolContext.Learners, "LearnerID", "LearnerID");
+        // ViewBag.CourseID = new SelectList(_schoolContext.Courses, "CourseID", "CourseID");
+        // ViewBag.LearnerID = new SelectList(_schoolContext.Learners, "LearnerID", "LearnerID");
+        
+        ViewBag.ListLearner = new List<SelectListItem>();
+
+        foreach (var learner in _schoolContext.Learners.ToList()) {
+            ViewBag.ListLearner.Add(
+                new SelectListItem{
+                    Value = learner.LearnerID.ToString(),
+                    Text = learner.FirstMidName.ToString() + " " + learner.LastName.ToString()
+                }
+            );
+        }
+
+        ViewBag.ListCourse = new List<SelectListItem>();
+        foreach (var course in _schoolContext.Courses.ToList()) {
+            ViewBag.ListCourse.Add(
+                new SelectListItem{
+                    Value = course.CourseID.ToString(),
+                    Text = course.Title.ToString()
+                }
+            );
+        }
+
         return View();
     }
 

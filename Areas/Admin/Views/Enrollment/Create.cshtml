@@ -9,18 +9,18 @@
     <div asp-validation-summary="All" class="text-danger"></div>
     <form asp-area="Admin" asp-controller="Enrollment" asp-action="Create" method="post" class="mt-3">
         <div style="margin-top:7px" class="form-group row">
-            <label asp-for="CourseID" class="col-sm-2 col-form-label"></label>
+            <label asp-for="@Model.Learner" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
-                <select asp-for="CourseID" class="form-control" asp-items="ViewBag.CourseID"></select>
+                <select asp-for="@Model.Learner" class="form-control" asp-items="ViewBag.ListLearner"></select>
             </div>
-            <span asp-validation-for="CourseID" class="text-danger"></span>
+            <span asp-validation-for="@Model.Learner" class="text-danger"></span>
         </div>
         <div style="margin-top:7px" class="form-group row">
-            <label asp-for="LearnerID" class="col-sm-2 col-form-label"></label>
+            <label asp-for="@Model.Course" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
-                <select asp-for="LearnerID" class="form-control" asp-items="ViewBag.LearnerID"></select>
+                <select asp-for="@Model.Course" class="form-control" asp-items="ViewBag.ListCourse"></select>
             </div>
-            <span asp-validation-for="LearnerID" class="text-danger"></span>
+            <span asp-validation-for="@Model.Course" class="text-danger"></span>
         </div>
         <div style="margin-top:7px" class="form-group row">
             <label asp-for="Grade" class="col-sm-2 col-form-label"></label>
