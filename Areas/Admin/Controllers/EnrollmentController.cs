@@ -1,6 +1,7 @@
 
 
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore; 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 //
@@ -31,7 +32,10 @@ public class EnrollmentController : Controller
      * Description: Get list of Enrollment
      */
     public IActionResult Index() {
-        var listEnrollments = _schoolContext.Enrollments.ToList();
+        var listEnrollments = _schoolContext.Enrollments
+            .Include(e => e.Course)
+            .Include(e => e.Learner)
+            .ToList();
         return View(listEnrollments);
     }
 

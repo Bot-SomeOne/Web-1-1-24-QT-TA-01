@@ -9,8 +9,9 @@
     <thead>
         <tr>
             <th>Enrollment ID</th>
-            <th>Course ID </th>
-            <th>Learner ID </th>
+            <th>Course Title</th>
+            <th>Course Credits</th>
+            <th>Learner Full Name</th>
             <th>Grade </th>
         </tr>
     </thead>
@@ -21,10 +22,13 @@
                 <td>
                     <a asp-action="Details" asp-area="Admin" asp-controller="Enrollment" asp-route-id="@s.EnrollmentID">@s.EnrollmentID</a>
                 <td>
-                    <a asp-action="Details" asp-area="Admin" asp-controller="Course" asp-route-id="@s.CourseID">@s.CourseID</a>
+                    <a asp-action="Details" asp-area="Admin" asp-controller="Course" asp-route-id="@s.CourseID">@s.Course.Title</a>
                 </td>
+                <th>
+                    @s.Course.Credits
+                </th>
                 <td>
-                    <a asp-action="Edit" asp-area="Admin" asp-controller="Learner" asp-route-id="@s.LearnerID">@s.LearnerID</a>
+                    <a asp-action="Edit" asp-area="Admin" asp-controller="Learner" asp-route-id="@s.LearnerID">@(s.Learner.LastName + s.Learner.FirstMidName)</a>
                 </td>
                 <td>
                     @s.Grade
