@@ -15,6 +15,7 @@ public class Learner {
     public virtual Major? Major { get; set; }
 
     public virtual ICollection<Enrollment> Enrollments { get; set; }
+    public ICollection<DangKiHoc> DangKiHocs { get; set; }
     
     // Constructor
     public Learner() {

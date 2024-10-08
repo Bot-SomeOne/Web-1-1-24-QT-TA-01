@@ -10,6 +10,7 @@ public class SchoolContext : DbContext
     public virtual DbSet<Enrollment> Enrollments { get; set; }
     public virtual DbSet<Major> Majors { get; set; }
     public virtual DbSet<Student> Students { get; set; }
+    public virtual DbSet<DangKiHoc> DangKiHocs { get; set; }
     
     // Constructor
     public SchoolContext(DbContextOptions<SchoolContext> options) : base(options) { }
@@ -42,6 +43,10 @@ public class SchoolContext : DbContext
             .ValueGeneratedOnAdd();
 
         modelBuilder.Entity<Student>()
+            .Property(e => e.Id)
+            .ValueGeneratedOnAdd();
+
+        modelBuilder.Entity<DangKiHoc>()
             .Property(e => e.Id)
             .ValueGeneratedOnAdd();
     }

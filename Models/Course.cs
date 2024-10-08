@@ -21,7 +21,8 @@ public class Course {
     [RegularExpression("^[1-9][0-9]*", ErrorMessage = " Vui long nhap so nguyen lon hon 0")]
     public int Credits { get; set; }
     public virtual ICollection<Enrollment> Enrollments { get; set; }
-    
+    public ICollection<DangKiHoc> DangKiHocs { get; set; }
+
     // Constructor
     public Course() {
         Enrollments = new HashSet<Enrollment>();
