@@ -226,6 +226,12 @@ public class DbInitializer
                     },
                     new NavItem() {
                         Area = "Admin",
+                        Controller = "DangKiHoc",
+                        Action = "Index",
+                        Text = "Dang ki hoc"
+                    },
+                    new NavItem() {
+                        Area = "Admin",
                         Controller = "NavLeftItem",
                         Action = "Index",
                         Text = "List Nav In DashBoard"
