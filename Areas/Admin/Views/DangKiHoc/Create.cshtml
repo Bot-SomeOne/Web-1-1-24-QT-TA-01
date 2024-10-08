@@ -1,0 +1,86 @@
+@using lab1.models.viewmodels
+@model CreateDangKiHoc
+
+@{
+    ViewData["Title"] = "Dang Ki Hoc";
+}
+
+<div>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <form asp-area="Admin" asp-controller="DangKiHoc" asp-action="Create" method="post" class="mt-3">
+        <div style="margin-top:7px" class="form-group row">
+            <label asp-for="@Model.LearnerID" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <select asp-for="@Model.LearnerID" asp-items="ViewBag.ListLearner" class="form-control"></select>
+            </div>
+            <span asp-validation-for="@Model.LearnerID" class="text-danger"></span>
+        </div>
+        <div id="listCheckBoxCourse" style="margin: 7px" class="form-group row">
+
+        </div>
+        <div style="margin-top:10px" class="form-group row">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+<script>
+
+    const GetUnregisteredCourse = (learnerId) => {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: '/Admin/DangKiHoc/GetUnregisteredCourse',
+                type: 'GET',
+                data: { id: learnerId },
+                success: function (response) {
+                    resolve(response);
+                },
+                accepts: 'application/json',
+                error: function (error) {
+                    reject(error);
+                }
+            });
+        });
+    };
+
+    const CreateCheckBoxCourse = (courses) => {
+        let listRadioCourse = $('#listCheckBoxCourse');
+        listRadioCourse.empty();
+        courses.forEach(course => {
+            let radio = `<div class="form-check">
+                                <input class="form-check ajax-checkbox" 
+                                    type="checkbox" 
+                                    name="CourseID" 
+                                    id="course-${course.courseID}" 
+                                    value="${course.courseID}">
+                                <label class="form-check ajax-checkbox-label" for="course-${course.courseID}">
+                                    ${course.title}
+                                </label>
+                            </div>`;
+            listRadioCourse.append(radio);
+        });
+    };
+
+    $(document).ready(function () {
+        // Get default
+        GetUnregisteredCourse($('#LearnerID').val()).then(courses => {
+            CreateCheckBoxCourse(courses);
+        }).catch(error => {
+            console.error("Failed to load courses", error);
+        });
+
+        $('#LearnerID').change(function () {
+            var learnerId = $(this).val();
+            console.log('LearnerID changed to ID' + learnerId);
+            GetUnregisteredCourse(learnerId).then(courses => {
+                CreateCheckBoxCourse(courses);
+            }).catch(error => {
+                console.error("Failed to load courses", error);
+            });
+        });
+    });
+</script>
+}
