@@ -5,7 +5,7 @@
 namespace lab1.Migrations.View
 {
     /// <inheritdoc />
-    public partial class NavLeftDashboardAdmin : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

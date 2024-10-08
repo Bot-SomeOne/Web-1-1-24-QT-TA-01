@@ -12,8 +12,8 @@ using lab1.data;
 namespace lab1.Migrations.Identity
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20240905082219_AddIdentityUserCustom")]
-    partial class AddIdentityUserCustom
+    [Migration("20241008124428_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

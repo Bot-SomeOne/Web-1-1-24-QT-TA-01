@@ -11,8 +11,8 @@ using lab1.data;
 namespace lab1.Migrations.View
 {
     [DbContext(typeof(ViewContext))]
-    [Migration("20240929170258_AutoCreatePrimaryKey")]
-    partial class AutoCreatePrimaryKey
+    [Migration("20241008124332_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

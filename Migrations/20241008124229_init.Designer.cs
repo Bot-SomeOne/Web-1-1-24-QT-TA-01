@@ -12,8 +12,8 @@ using lab1.data;
 namespace lab1.Migrations
 {
     [DbContext(typeof(SchoolContext))]
-    [Migration("20240903200051_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241008124229_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,7 +28,10 @@ namespace lab1.Migrations
             modelBuilder.Entity("lab1.models.Course", b =>
                 {
                     b.Property<int>("CourseID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CourseID"));
 
                     b.Property<int>("Credits")
                         .HasColumnType("int");
@@ -40,6 +43,29 @@ namespace lab1.Migrations
                     b.HasKey("CourseID");
 
                     b.ToTable("Course", (string)null);
+                });
+
+            modelBuilder.Entity("lab1.models.DangKiHoc", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CourseID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LearnerID")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseID");
+
+                    b.HasIndex("LearnerID");
+
+                    b.ToTable("DangKiHocs");
                 });
 
             modelBuilder.Entity("lab1.models.Enrollment", b =>
@@ -114,6 +140,76 @@ namespace lab1.Migrations
                     b.ToTable("Major", (string)null);
                 });
 
+            modelBuilder.Entity("lab1.models.Student", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Avatar")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<int>("Branch")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DateOfBirth")
+                        .IsRequired()
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsRegular")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<double?>("Point")
+                        .IsRequired()
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Student", (string)null);
+                });
+
+            modelBuilder.Entity("lab1.models.DangKiHoc", b =>
+                {
+                    b.HasOne("lab1.models.Course", "Course")
+                        .WithMany("DangKiHocs")
+                        .HasForeignKey("CourseID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("lab1.models.Learner", "Learner")
+                        .WithMany("DangKiHocs")
+                        .HasForeignKey("LearnerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Learner");
+                });
+
             modelBuilder.Entity("lab1.models.Enrollment", b =>
                 {
                     b.HasOne("lab1.models.Course", "Course")
@@ -146,11 +242,15 @@ namespace lab1.Migrations
 
             modelBuilder.Entity("lab1.models.Course", b =>
                 {
+                    b.Navigation("DangKiHocs");
+
                     b.Navigation("Enrollments");
                 });
 
             modelBuilder.Entity("lab1.models.Learner", b =>
                 {
+                    b.Navigation("DangKiHocs");
+
                     b.Navigation("Enrollments");
                 });
 
