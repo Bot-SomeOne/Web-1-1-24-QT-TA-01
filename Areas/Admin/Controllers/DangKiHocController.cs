@@ -31,7 +31,8 @@ public class DangKiHocController : Controller
      *  GET: Admin/DangKiHoc
      *  Get list data of DangKiHoc
      */
-    public IActionResult Index() {
+    public IActionResult Index()
+    {
         var dangkiHocs = _schoolContext.DangKiHocs
             .Include(e => e.Course)
             .Include(e => e.Learner)
@@ -44,15 +45,21 @@ public class DangKiHocController : Controller
      *  GET: Admin/DangKiHoc/Create
      *  Create new DangKiHoc
      */
-    public IActionResult Create() {
+    public IActionResult Create()
+    {
         ViewBag.ListLearner = new List<SelectListItem>();
-        foreach (var learner in _schoolContext.Learners.ToList()) {
-            ViewBag.ListLearner.Add(
-                new SelectListItem{
-                    Value = learner.LearnerID.ToString(),
-                    Text = learner.FirstMidName.ToString() + " " + learner.LastName.ToString()
-                }
-            );
+        foreach (var learner in _schoolContext.Learners.ToList())
+        {
+            if (!IsCourseAll(learner.LearnerID))
+            {
+                ViewBag.ListLearner.Add(
+                    new SelectListItem
+                    {
+                        Value = learner.LearnerID.ToString(),
+                        Text = learner.FirstMidName.ToString() + " " + learner.LastName.ToString()
+                    }
+                );
+            }
         }
 
         return View();
@@ -63,10 +70,14 @@ public class DangKiHocController : Controller
      *  Create new DangKiHoc
      */
     [HttpPost]
-    public IActionResult Create(CreateDangKiHoc model) {
-        if (ModelState.IsValid) {
-            foreach(int idCourse in model.CourseID) {
-                var dangkiHoc = new DangKiHoc {
+    public IActionResult Create(CreateDangKiHoc model)
+    {
+        if (ModelState.IsValid)
+        {
+            foreach (int idCourse in model.CourseID)
+            {
+                var dangkiHoc = new DangKiHoc
+                {
                     LearnerID = model.LearnerID,
                     CourseID = idCourse
                 };
@@ -76,7 +87,7 @@ public class DangKiHocController : Controller
             _schoolContext.SaveChanges();
             return RedirectToAction("Index");
         }
-        
+
         // string listCourseId = "";
         // foreach (int idCourse in model.CourseID) {
         //     listCourseId += idCourse + ", ";
@@ -86,13 +97,18 @@ public class DangKiHocController : Controller
         // );
 
         ViewBag.ListLearner = new List<SelectListItem>();
-        foreach (var learner in _schoolContext.Learners.ToList()) {
-            ViewBag.ListLearner.Add(
-                new SelectListItem{
-                    Value = learner.LearnerID.ToString(),
-                    Text = learner.FirstMidName.ToString() + " " + learner.LastName.ToString()
-                }
-            );
+        foreach (var learner in _schoolContext.Learners.ToList())
+        {
+            if (!IsCourseAll(learner.LearnerID))
+            {
+                ViewBag.ListLearner.Add(
+                    new SelectListItem
+                    {
+                        Value = learner.LearnerID.ToString(),
+                        Text = learner.FirstMidName.ToString() + " " + learner.LastName.ToString()
+                    }
+                );
+            }
         }
         return View(model);
     }
@@ -101,9 +117,11 @@ public class DangKiHocController : Controller
      * DELETE: Admin/DangKiHoc/Delete/{id}
      * Delete DangKiHoc by id
      */
-    public IActionResult Delete(int id) {
+    public IActionResult Delete(int id)
+    {
         var dangkiHoc = _schoolContext.DangKiHocs.Find(id);
-        if (dangkiHoc == null) {
+        if (dangkiHoc == null)
+        {
             return NotFound();
         }
 
@@ -120,17 +138,31 @@ public class DangKiHocController : Controller
      * Get list course Unregistered by Learner
      */
     [HttpGet]
-    public IActionResult GetUnregisteredCourse(int id) {
+    public IActionResult GetUnregisteredCourse(int id)
+    {
         var listCourse = _schoolContext.Courses.ToList();
         var listDangKiHoc = _schoolContext.DangKiHocs.Where(e => e.LearnerID == id).ToList();
         var res = new List<Course>();
 
-        foreach (var course in listCourse) {
-            if (listDangKiHoc.Find(e => e.CourseID == course.CourseID) == null) {
+        foreach (var course in listCourse)
+        {
+            if (listDangKiHoc.Find(e => e.CourseID == course.CourseID) == null)
+            {
                 res.Add(course);
             }
         }
 
         return Json(res);
+    }
+
+    // Helpper Kiem tra sinh vien co da dang ki tat ca cac hoc phan khong
+    private bool IsCourseAll(int LearnerID)
+    {
+
+        int SumCourse = _schoolContext.Courses.Count();
+        var CourseOfLearner = _schoolContext.DangKiHocs
+                .Where(e => e.LearnerID == LearnerID);
+        if (SumCourse == CourseOfLearner.Count()) return true;
+        return false;
     }
 }
