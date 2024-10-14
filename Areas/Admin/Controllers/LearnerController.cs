@@ -6,6 +6,8 @@ using System.Linq;
 //
 using lab1.data;
 using lab1.models;
+using System.Runtime.InteropServices;
+using Microsoft.VisualBasic;
 
 namespace lab1.areas.admin.controllers;
 
@@ -38,7 +40,7 @@ public class LearnerController : Controller
         int pageNum = (int)Math.Ceiling(learners.Count() / (float)pageSize);
         ViewBag.pageNum = pageNum;
         ViewBag.pageIndexCurrent = 1;
-        
+
         var result = learners.Take(pageSize).ToList();
 
         return View(result);
@@ -200,6 +202,79 @@ public class LearnerController : Controller
         return PartialView("LearnerTable", result);
     }
 
+    /**
+     * GET: Dang ki mon hoc
+     */
+    public IActionResult DangKiMonHoc(int id)
+    {
+        // Get Learner
+        var Learner = db.Learners.Find(id);
+        ViewBag.Learner = Learner;
+
+        // Get the courses the learner has chosen
+        var courseChoices = db.DangKiHocs
+            .Where(l => l.LearnerID == id)
+            .Include(c => c.Course)
+            .ToList();
+
+        // Store in ViewBag for use in the View
+        ViewBag.CourseChoices = courseChoices;
+
+        // Get all courses
+        var courses = db.Courses.AsQueryable();
+
+        // Get the courses the learner has NOT chosen
+        var chosenCourseIds = courseChoices.Select(cc => cc.Course.CourseID).ToList();
+
+        ViewBag.CourseDontChoice = courses
+            .Where(c => !chosenCourseIds.Contains(c.CourseID))
+            .ToList();
+
+        return View();
+
+    }
+
+    /**
+     * POST: Dang ki mon hoc
+     */
+    [HttpPost]
+    public IActionResult DangKiMonHoc(List<int> CourseId, int learnerID)
+    {
+        foreach (var courseID in CourseId)
+        {
+            DangKiHoc dangKiHoc = new DangKiHoc
+            {
+                LearnerID = learnerID,
+                CourseID = courseID
+            };
+            db.DangKiHocs.Add(dangKiHoc);
+        }
+
+        db.SaveChanges();
+
+        return RedirectToAction(nameof(DangKiMonHoc));
+    }
+
+    /**
+     * POST: Huy Dang Ki Mon Hoc
+     */
+    [HttpPost]
+    public IActionResult HuyDangKiMonHoc(List<int> CourseId, int learnerID)
+    {
+        foreach (var courseID in CourseId)
+        {
+            DangKiHoc dangKiHoc = db.DangKiHocs.FirstOrDefault(d =>
+                        d.LearnerID == learnerID && d.CourseID == courseID);
+            if (dangKiHoc != null)
+            {
+                db.DangKiHocs.Remove(dangKiHoc);
+            }
+        }
+
+        db.SaveChanges();
+
+        return RedirectToAction(nameof(DangKiMonHoc), new { id = learnerID });
+    }
 
     /**
      * List Help funtion
